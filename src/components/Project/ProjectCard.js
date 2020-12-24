@@ -5,7 +5,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 const ProjectCard = () => {
 	return (
 		<div id="projectCardContainer">
-			<h3>Project 3</h3>
+			<h4>Project 3</h4>
 			<FontAwesomeIcon id="deleteProject" icon={faTimes}></FontAwesomeIcon>
 		</div>
 	);

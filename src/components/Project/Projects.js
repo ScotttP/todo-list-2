@@ -6,6 +6,7 @@ const Projects = () => {
 		<aside id="projectsContainer">
 			<h2>Projects</h2>
 			<ul id="projectList">
+				<h4>View All</h4>
 				<ProjectCard />
 			</ul>
 		</aside>

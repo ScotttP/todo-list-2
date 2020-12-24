@@ -4,6 +4,15 @@
 	box-sizing: border-box;
 	font-family: "Lato", sans-serif;
 }
+html {
+	width: 100%;
+	height: 100%;
+	background-color: #444141;
+}
+body {
+	color: #ffff;
+	width: 100%;
+}
 
 /* NAVBAR */
 #navbarContainer {
@@ -29,6 +38,29 @@
 }
 /* NAVBAR */
 
+/* Main Display */
+#projectsAndTodosDisplay {
+	display: flex;
+	margin-top: 3%;
+	height: 100%;
+	flex-grow: 1;
+}
+
+/* Main Display */
+
+/* Projects Container */
+
+#projectsContainer {
+	width: 30%;
+	margin-left: 5%;
+	background-color: #363636;
+}
+#projectList {
+	margin-top: 10px;
+}
+
+/* Projects Container */
+
 /* Project Card */
 #projectCardContainer {
 	display: flex;
@@ -43,3 +75,27 @@
 }
 
 /* Project Card */
+
+/* Todos Container */
+
+#todosContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 70%;
+	background-color: #272626;
+	margin-right: 5%;
+}
+.todoCardContainer {
+	width: 100%;
+}
+.mainTodoView {
+	display: flex;
+}
+.expandedTodoView {
+}
+#todoListTable {
+	width: 100%;
+}
+
+/* Todos Container */

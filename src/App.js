@@ -17,8 +17,10 @@ const App = () => {
 				<Route exact path="/SignUp" component={SignUp}></Route>
 
 				<Route exact path="/">
-					<Projects></Projects>
-					<Todos></Todos>
+					<div id="projectsAndTodosDisplay">
+						<Projects></Projects>
+						<Todos></Todos>
+					</div>
 				</Route>
 			</Switch>
 		</Router>

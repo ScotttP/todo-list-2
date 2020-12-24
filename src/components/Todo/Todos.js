@@ -4,10 +4,25 @@ import AddTodoWindow from "./AddTodoWindow";
 
 const Todos = () => {
 	return (
-		<div id="todosContainer">
-			<TodoCard></TodoCard>
-			<AddTodoWindow></AddTodoWindow>
-		</div>
+		<main id="todosContainer">
+			<h2>To-Do Items</h2>
+			<button>+ Add Todo</button>
+			<table id="todoListTable">
+				<thead id="tableHeaders">
+					<tr>
+						<th>Completed</th>
+						<th>Task Name</th>
+						<th>Due Date</th>
+						<th>Priority</th>
+					</tr>
+				</thead>
+				<tbody>
+					<TodoCard></TodoCard>
+				</tbody>
+			</table>
+
+			{/* <AddTodoWindow></AddTodoWindow> */}
+		</main>
 	);
 };
 
