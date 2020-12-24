@@ -1,1 +1,30 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Lato", sans-serif;
+}
 
+/* NAVBAR */
+#navbarContainer {
+	background-color: #1f1f1f;
+
+	height: 4vh;
+	width: 100%;
+}
+
+#navbarContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+#navbarLeft {
+	margin-right: 15px;
+}
+#navbarLeft > a,
+#navbarRight > a {
+	color: #1db954;
+	text-decoration: "none";
+	margin: 5px;
+}
+/* NAVBAR */

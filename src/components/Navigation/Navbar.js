@@ -1,13 +1,18 @@
 import React from "react";
-import SignUp from "./SignUp";
-import Login from "./Login";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
 	return (
-		<div id="navbarContainer">
-			<Login></Login>
-			<SignUp></SignUp>
-		</div>
+		<header id="navbarContainer">
+			<div id="navbarRight">
+				<Link to="">ToDo App</Link>
+			</div>
+			<div id="navbarLeft">
+				<Link to="/Login">Login</Link>
+				{/* need to add logic here for login / logout */}
+				<Link to="/SignUp">SignUp</Link>
+			</div>
+		</header>
 	);
 };
 

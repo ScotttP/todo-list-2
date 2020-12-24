@@ -3,10 +3,10 @@ import ProjectCard from "./ProjectCard";
 
 const Projects = () => {
 	return (
-		<div id="projectsContainer">
-			Projects
+		<aside id="projectsContainer">
+			<h2>Projects</h2>
 			<ProjectCard />
-		</div>
+		</aside>
 	);
 };
 

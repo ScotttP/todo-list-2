@@ -1,16 +1,27 @@
 import React from "react";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navigation/Navbar";
 import Projects from "./components/Project/Projects";
-import Tasks from "./components/Task/Tasks";
+import Todos from "./components/Todo/Todos";
+import Login from "./components/Navigation/Login";
+import SignUp from "./components/Navigation/SignUp";
 
 const App = () => {
 	return (
-		<div id="appContainer">
+		<Router basename={process.env.PUBLIC_URL + "/"}>
 			<Navbar></Navbar>
-			<Projects></Projects>
-			<Tasks></Tasks>
-		</div>
+			<Switch>
+				<Route exact path="/Login" component={Login} />
+
+				<Route exact path="/SignUp" component={SignUp}></Route>
+
+				<Route exact path="/">
+					<Projects></Projects>
+					<Todos></Todos>
+				</Route>
+			</Switch>
+		</Router>
 	);
 };
 
