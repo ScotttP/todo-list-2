@@ -28,3 +28,18 @@
 	margin: 5px;
 }
 /* NAVBAR */
+
+/* Project Card */
+#projectCardContainer {
+	display: flex;
+	align-items: center;
+}
+#deleteProject {
+	margin-left: 10px;
+}
+#deleteProject:hover {
+	color: red;
+	cursor: pointer;
+}
+
+/* Project Card */

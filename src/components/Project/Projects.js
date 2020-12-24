@@ -5,7 +5,9 @@ const Projects = () => {
 	return (
 		<aside id="projectsContainer">
 			<h2>Projects</h2>
-			<ProjectCard />
+			<ul id="projectList">
+				<ProjectCard />
+			</ul>
 		</aside>
 	);
 };
