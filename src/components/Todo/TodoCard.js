@@ -1,6 +1,6 @@
 import React from "react";
 
-const TodoCard = () => {
+const TodoCard = (props) => {
 	return (
 		<tr className="todoCardContainer">
 			<td>
@@ -10,13 +10,8 @@ const TodoCard = () => {
 			<td>12/25/2020</td>
 			<td>Medium</td>
 			<td>
-				<button>expand</button>
+				<button onClick={props.toggleExpandedView}>expand</button>
 			</td>
-			<div className="expandedTodoView">
-				<textarea></textarea>
-				<button>Edit</button>
-				<button>Delete</button>
-			</div>
 		</tr>
 	);
 };

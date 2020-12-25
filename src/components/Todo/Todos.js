@@ -1,8 +1,17 @@
-import React from "react";
+import { React, useState } from "react";
 import TodoCard from "./TodoCard";
 import AddTodoWindow from "./AddTodoWindow";
+import ExpandedViewTodoCard from "./ExpandedViewTodoCard";
 
 const Todos = () => {
+	const [extendedViewDisplay, setExtendedViewDisplay] = useState("none");
+
+	const toggleExtendedViewDisplay = () => {
+		setExtendedViewDisplay((prevState) => {
+			if (prevState === "none") return "inline";
+			else return "none";
+		});
+	};
 	return (
 		<main id="todosContainer">
 			<h2>To-Do Items</h2>
@@ -17,7 +26,10 @@ const Todos = () => {
 					</tr>
 				</thead>
 				<tbody>
-					<TodoCard></TodoCard>
+					<TodoCard toggleExpandedView={toggleExtendedViewDisplay}></TodoCard>
+					<ExpandedViewTodoCard
+						view={extendedViewDisplay}
+					></ExpandedViewTodoCard>
 				</tbody>
 			</table>
 

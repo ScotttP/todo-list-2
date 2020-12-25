@@ -88,14 +88,25 @@ body {
 }
 .todoCardContainer {
 	width: 100%;
+	text-align: left;
 }
 .mainTodoView {
 	display: flex;
 }
-.expandedTodoView {
+td,
+th {
+	width: 30vw;
+	max-width: 200px;
+}
+textarea {
+	resize: none;
 }
 #todoListTable {
 	width: 100%;
+}
+
+#tableHeaders {
+	text-align: left;
 }
 
 /* Todos Container */
