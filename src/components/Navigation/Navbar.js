@@ -5,12 +5,12 @@ const Navbar = () => {
 	return (
 		<header id="navbarContainer">
 			<div id="navbarRight">
-				<Link style={{ textDecoration: "none" }} to="">
+				<Link style={{ textDecoration: "none" }} to="/Todos">
 					ToDo App
 				</Link>
 			</div>
 			<div id="navbarLeft">
-				<Link style={{ textDecoration: "none" }} to="/Login">
+				<Link style={{ textDecoration: "none" }} to="/">
 					Login
 				</Link>
 				{/* need to add logic here for login / logout */}

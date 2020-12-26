@@ -4,19 +4,20 @@ import "./App.css";
 import Navbar from "./components/Navigation/Navbar";
 import Projects from "./components/Project/Projects";
 import Todos from "./components/Todo/Todos";
-import Login from "./components/Navigation/Login";
-import SignUp from "./components/Navigation/SignUp";
+import Login from "./components/User Auth/Login";
+import SignUp from "./components/User Auth/SignUp";
 
 const App = () => {
 	return (
 		<Router basename={process.env.PUBLIC_URL + "/"}>
 			<Navbar></Navbar>
+
 			<Switch>
-				<Route exact path="/Login" component={Login} />
+				<Route exact path="/" component={Login} />
 
 				<Route exact path="/SignUp" component={SignUp}></Route>
 
-				<Route exact path="/">
+				<Route exact path="/Todos">
 					<div id="projectsAndTodosDisplay">
 						<Projects></Projects>
 						<Todos></Todos>
