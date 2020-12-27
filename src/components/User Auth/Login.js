@@ -7,11 +7,19 @@ const Login = (props) => {
 			<h2>Login</h2>
 			<label>
 				Email:
-				<input type="email" onChange={(e) => props.handleChange(e)}></input>
+				<input
+					id="loginEmailInput"
+					type="email"
+					onChange={(e) => props.handleChange(e)}
+				></input>
 			</label>
 			<label>
 				Password:
-				<input type="password" onChange={(e) => props.handleChange(e)}></input>
+				<input
+					id="loginPasswordInput"
+					type="password"
+					onChange={(e) => props.handleChange(e)}
+				></input>
 			</label>
 			<button onClick={(e) => props.loginWithEmail(e)}>Login</button>
 			<br></br>
@@ -23,7 +31,7 @@ const Login = (props) => {
 			<br></br>
 			<p>Don't have an account?</p>
 			<Link style={{ textDecoration: "none" }} to="/SignUp">
-				<button onClick={props.toggleLoginAndSignupUI()}>Sign Up</button>
+				<button>Sign Up</button>
 			</Link>
 		</form>
 	);

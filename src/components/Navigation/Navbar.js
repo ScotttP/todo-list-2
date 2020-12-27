@@ -5,6 +5,7 @@ const Navbar = () => {
 	const renderSignUpAndSignOutButton = () => {
 		// if user is logged in, show only sign out. else show the login and sign up tabs
 	};
+
 	return (
 		<header id="navbarContainer">
 			<div id="navbarRight">
