@@ -5,7 +5,7 @@ import Navbar from "./components/Navigation/Navbar";
 import Projects from "./components/Project/Projects";
 import Todos from "./components/Todo/Todos";
 import Login from "./components/User Auth/Login";
-import SignUp from "./components/User Auth/SignUp";
+import UserAuthUI from "./components/User Auth/UserAuthUI";
 
 const App = () => {
 	return (
@@ -13,9 +13,9 @@ const App = () => {
 			<Navbar></Navbar>
 
 			<Switch>
-				<Route path="/Login" component={Login} />
+				<Route path="/Login" component={UserAuthUI} />
 
-				<Route path="/SignUp" component={SignUp}></Route>
+				<Route path="/SignUp" component={UserAuthUI}></Route>
 
 				<Route path="/Todos">
 					<div id="projectsAndTodosDisplay">
