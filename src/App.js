@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
 	HashRouter as Router,
 	Switch,
@@ -31,6 +31,8 @@ const App = () => {
 	const [loginPassword, setLoginPassword] = useState("");
 	const [signUpEmail, setSignUpEmail] = useState("");
 	const [signUpPassword, setSignUpPassword] = useState("");
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [currentUser, setCurrentUser] = useState("");
 
 	const handleChange = (e) => {
 		if (e.target.type === "email" && e.target.id === "loginEmailInput")
@@ -59,7 +61,10 @@ const App = () => {
 				}
 				console.log(error);
 			});
-		firebase.auth().onAuthStateChanged(authStateObserver);
+		// firebase.auth().onAuthStateChanged((user) => {
+		setIsLoggedIn(true);
+		// setCurrentUser(user);
+		// });
 	};
 	const signUpWithEmail = (e) => {
 		e.preventDefault();
@@ -70,7 +75,7 @@ const App = () => {
 				// Handle Errors here.
 				let errorCode = error.code;
 				let errorMessage = error.message;
-				if (errorCode == "auth/weak-password") {
+				if (errorCode === "auth/weak-password") {
 					alert("The password is too weak.");
 				} else {
 					alert(errorMessage);
@@ -81,47 +86,101 @@ const App = () => {
 	const loginWithGoogle = (e) => {
 		let provider = new firebase.auth.GoogleAuthProvider();
 		firebase.auth().signInWithPopup(provider);
-		firebase.auth().onAuthStateChanged(authStateObserver);
+		// firebase.auth().onAuthStateChanged((user) => {
+		// 	console.log(user);
+		setIsLoggedIn(true);
+		setCurrentUser(firebase.auth.currentUser);
+		// });
 	};
+
+	const signOut = () => {
+		// firebase.auth().onAuthStateChanged((user) => {
+		// 	console.log(user);
+		setIsLoggedIn(false);
+		setCurrentUser("");
+		// });
+
+		firebase.auth().signOut();
+	};
+
+	const authStateObserver = (user) => {
+		if (user) {
+			console.log(user);
+		} else console.log(user);
+	};
+
+	useEffect(() => {
+		firebase.auth().onAuthStateChanged(authStateObserver);
+	});
 
 	return (
 		<Router basename={process.env.PUBLIC_URL + "/"}>
-			<Navbar></Navbar>
+			<Navbar
+				isLoggedIn={isLoggedIn}
+				currentUser={currentUser}
+				signOut={signOut}
+			></Navbar>
 
 			<Switch>
-				<Route exact path="/">
-					{firebase.auth().currentUser ? (
-						<Redirect to="/Todos" />
-					) : (
-						<Login
-							handleChange={(e) => handleChange(e)}
-							loginWithEmail={(e) => loginWithEmail(e)}
-							loginWithGoogle={(e) => loginWithGoogle(e)}
-						></Login>
-					)}
-				</Route>
-				<Route path="/Login">
-					<Login
-						handleChange={(e) => handleChange(e)}
-						loginWithEmail={(e) => loginWithEmail(e)}
-						loginWithGoogle={(e) => loginWithGoogle(e)}
-					/>
-				</Route>
+				<Route
+					exact
+					path="/"
+					render={() =>
+						isLoggedIn ? (
+							<Redirect to="/Todos" />
+						) : (
+							<Login
+								handleChange={(e) => handleChange(e)}
+								loginWithEmail={(e) => loginWithEmail(e)}
+								loginWithGoogle={(e) => loginWithGoogle(e)}
+							/>
+						)
+					}
+				/>
 
-				<Route path="/SignUp">
-					<SignUp
-						handleChange={(e) => handleChange(e)}
-						signUpWithEmail={(e) => signUpWithEmail(e)}
-						loginWithGoogle={(e) => loginWithGoogle(e)}
-					/>
-				</Route>
+				<Route
+					path="/Login"
+					render={() =>
+						isLoggedIn ? (
+							<Redirect to="/Todos" />
+						) : (
+							<Login
+								handleChange={(e) => handleChange(e)}
+								loginWithEmail={(e) => loginWithEmail(e)}
+								loginWithGoogle={(e) => loginWithGoogle(e)}
+							/>
+						)
+					}
+				></Route>
 
-				<Route path="/Todos">
-					<div id="projectsAndTodosDisplay">
-						<Projects></Projects>
-						<Todos></Todos>
-					</div>
-				</Route>
+				<Route
+					path="/SignUp"
+					render={() =>
+						isLoggedIn ? (
+							<Redirect to="/Todos" />
+						) : (
+							<SignUp
+								handleChange={(e) => handleChange(e)}
+								signUpWithEmail={(e) => signUpWithEmail(e)}
+								loginWithGoogle={(e) => loginWithGoogle(e)}
+							/>
+						)
+					}
+				></Route>
+
+				<Route
+					path="/Todos"
+					render={() =>
+						isLoggedIn ? (
+							<div id="projectsAndTodosDisplay">
+								<Projects></Projects>
+								<Todos></Todos>
+							</div>
+						) : (
+							<div>Need to login or sign up to see this page.</div>
+						)
+					}
+				></Route>
 			</Switch>
 		</Router>
 	);

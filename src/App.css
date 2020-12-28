@@ -36,6 +36,10 @@ body {
 	text-decoration: "none";
 	margin: 5px;
 }
+
+a:hover {
+	cursor: pointer;
+}
 /* NAVBAR */
 
 /* Main Display */

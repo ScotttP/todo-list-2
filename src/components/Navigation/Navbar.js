@@ -1,9 +1,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 
-const Navbar = () => {
+const Navbar = (props) => {
 	const renderSignUpAndSignOutButton = () => {
-		// if user is logged in, show only sign out. else show the login and sign up tabs
+		// firebase.auth().onAuthStateChanged((user) => {
+		// 	console.log("firebase auth in navbar component");
+		// 	console.log(props);
+		// 	console.log(user);
+		// });
+		if (
+			props.isLoggedIn &&
+			props.currentUser !== null &&
+			props.currentUser !== undefined
+		)
+			return (
+				<div id="navbarLeft">
+					<p>Welcome, {props.currentUser.displayName}</p>
+					<a onClick={props.signOut}>Sign Out</a>
+				</div>
+			);
+		else
+			return (
+				<div id="navbarLeft">
+					<Link style={{ textDecoration: "none" }} to="/Login">
+						Login
+					</Link>
+
+					<Link style={{ textDecoration: "none" }} to="/SignUp">
+						SignUp
+					</Link>
+				</div>
+			);
 	};
 
 	return (
@@ -13,15 +43,7 @@ const Navbar = () => {
 					ToDo App
 				</Link>
 			</div>
-			<div id="navbarLeft">
-				<Link style={{ textDecoration: "none" }} to="/Login">
-					Login
-				</Link>
-				{/* need to add logic here for login / logout */}
-				<Link style={{ textDecoration: "none" }} to="/SignUp">
-					SignUp
-				</Link>
-			</div>
+			{renderSignUpAndSignOutButton()}
 		</header>
 	);
 };
