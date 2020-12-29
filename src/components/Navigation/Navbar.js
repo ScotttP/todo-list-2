@@ -6,16 +6,10 @@ import "firebase/firestore";
 
 const Navbar = (props) => {
 	const renderSignUpAndSignOutButton = () => {
-		// firebase.auth().onAuthStateChanged((user) => {
-		// 	console.log("firebase auth in navbar component");
-		// 	console.log(props);
-		// 	console.log(user);
-		// });
-		if (
-			props.isLoggedIn &&
-			props.currentUser !== null &&
-			props.currentUser !== undefined
-		)
+		// &&
+		// 	props.currentUser !== null &&
+		// 	props.currentUser !== undefined
+		if (props.currentUser)
 			return (
 				<div id="navbarLeft">
 					<p>Welcome, {props.currentUser.displayName}</p>

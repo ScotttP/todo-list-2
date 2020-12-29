@@ -61,10 +61,6 @@ const App = () => {
 				}
 				console.log(error);
 			});
-		// firebase.auth().onAuthStateChanged((user) => {
-		setIsLoggedIn(true);
-		// setCurrentUser(user);
-		// });
 	};
 	const signUpWithEmail = (e) => {
 		e.preventDefault();
@@ -86,32 +82,27 @@ const App = () => {
 	const loginWithGoogle = (e) => {
 		let provider = new firebase.auth.GoogleAuthProvider();
 		firebase.auth().signInWithPopup(provider);
-		// firebase.auth().onAuthStateChanged((user) => {
-		// 	console.log(user);
-		setIsLoggedIn(true);
-		setCurrentUser(firebase.auth.currentUser);
-		// });
+
+		setCurrentUser(firebase.auth().currentUser);
 	};
 
 	const signOut = () => {
-		// firebase.auth().onAuthStateChanged((user) => {
-		// 	console.log(user);
-		setIsLoggedIn(false);
-		setCurrentUser("");
-		// });
-
 		firebase.auth().signOut();
 	};
 
 	const authStateObserver = (user) => {
 		if (user) {
-			console.log(user);
-		} else console.log(user);
+			setCurrentUser(firebase.auth().currentUser);
+		} else {
+			setCurrentUser("");
+		}
+
+		console.log(firebase.auth().currentUser);
 	};
 
 	useEffect(() => {
 		firebase.auth().onAuthStateChanged(authStateObserver);
-	});
+	}, [currentUser]);
 
 	return (
 		<Router basename={process.env.PUBLIC_URL + "/"}>
@@ -126,7 +117,7 @@ const App = () => {
 					exact
 					path="/"
 					render={() =>
-						isLoggedIn ? (
+						currentUser ? (
 							<Redirect to="/Todos" />
 						) : (
 							<Login
@@ -141,7 +132,7 @@ const App = () => {
 				<Route
 					path="/Login"
 					render={() =>
-						isLoggedIn ? (
+						currentUser ? (
 							<Redirect to="/Todos" />
 						) : (
 							<Login
@@ -156,7 +147,7 @@ const App = () => {
 				<Route
 					path="/SignUp"
 					render={() =>
-						isLoggedIn ? (
+						currentUser ? (
 							<Redirect to="/Todos" />
 						) : (
 							<SignUp
@@ -171,7 +162,7 @@ const App = () => {
 				<Route
 					path="/Todos"
 					render={() =>
-						isLoggedIn ? (
+						currentUser ? (
 							<div id="projectsAndTodosDisplay">
 								<Projects></Projects>
 								<Todos></Todos>
