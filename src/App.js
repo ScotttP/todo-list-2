@@ -31,7 +31,6 @@ const App = () => {
 	const [loginPassword, setLoginPassword] = useState("");
 	const [signUpEmail, setSignUpEmail] = useState("");
 	const [signUpPassword, setSignUpPassword] = useState("");
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [currentUser, setCurrentUser] = useState("");
 
 	const handleChange = (e) => {
@@ -61,13 +60,15 @@ const App = () => {
 				}
 				console.log(error);
 			});
+		setCurrentUser(firebase.auth().currentUser);
+		console.log(currentUser);
 	};
 	const signUpWithEmail = (e) => {
 		e.preventDefault();
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(signUpEmail, signUpPassword)
-			.catch(function (error) {
+			.catch((error) => {
 				// Handle Errors here.
 				let errorCode = error.code;
 				let errorMessage = error.message;
@@ -78,12 +79,14 @@ const App = () => {
 				}
 				console.log(error);
 			});
+		setCurrentUser(firebase.auth().currentUser);
+		console.log(currentUser);
 	};
 	const loginWithGoogle = (e) => {
 		let provider = new firebase.auth.GoogleAuthProvider();
 		firebase.auth().signInWithPopup(provider);
-
 		setCurrentUser(firebase.auth().currentUser);
+		console.log(currentUser);
 	};
 
 	const signOut = () => {
@@ -96,24 +99,21 @@ const App = () => {
 		} else {
 			setCurrentUser("");
 		}
-
-		console.log(firebase.auth().currentUser);
+		console.log(currentUser);
+		console.log(user);
 	};
 
 	useEffect(() => {
 		firebase.auth().onAuthStateChanged(authStateObserver);
-	}, [currentUser]);
+	});
 
 	return (
 		<Router basename={process.env.PUBLIC_URL + "/"}>
-			<Navbar
-				isLoggedIn={isLoggedIn}
-				currentUser={currentUser}
-				signOut={signOut}
-			></Navbar>
+			<Navbar currentUser={currentUser} signOut={signOut}></Navbar>
 
 			<Switch>
 				<Route
+					// once logged in, re route to the todos route, else keep on the login page
 					exact
 					path="/"
 					render={() =>

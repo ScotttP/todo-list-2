@@ -1,18 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
 
 const Navbar = (props) => {
 	const renderSignUpAndSignOutButton = () => {
-		// &&
-		// 	props.currentUser !== null &&
-		// 	props.currentUser !== undefined
-		if (props.currentUser)
+		if (props.currentUser && props.currentUser.displayName !== null)
 			return (
 				<div id="navbarLeft">
 					<p>Welcome, {props.currentUser.displayName}</p>
+					<a onClick={props.signOut}>Sign Out</a>
+				</div>
+			);
+		if (props.currentUser.displayName === null)
+			return (
+				<div id="navbarLeft">
+					<p>Welcome, {props.currentUser.email}</p>
 					<a onClick={props.signOut}>Sign Out</a>
 				</div>
 			);

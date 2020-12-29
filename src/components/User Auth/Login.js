@@ -21,6 +21,7 @@ const Login = (props) => {
 					onChange={(e) => props.handleChange(e)}
 				></input>
 			</label>
+			<div>Error div</div>
 			<button onClick={(e) => props.loginWithEmail(e)}>Login</button>
 			<br></br>
 			<p>or</p>
