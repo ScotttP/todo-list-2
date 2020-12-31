@@ -32,6 +32,7 @@ const App = () => {
 	const [signUpEmail, setSignUpEmail] = useState("");
 	const [signUpPassword, setSignUpPassword] = useState("");
 	const [currentUser, setCurrentUser] = useState("");
+	const [errors, setErrors] = useState("");
 
 	const handleChange = (e) => {
 		if (e.target.type === "email" && e.target.id === "loginEmailInput")
@@ -50,17 +51,10 @@ const App = () => {
 			.auth()
 			.signInWithEmailAndPassword(loginEmail, loginPassword)
 			.catch((error) => {
-				// Handle Errors here.
-				let errorCode = error.code;
-				let errorMessage = error.message;
-				if (errorCode === "auth/wrong-password") {
-					alert("Wrong password.");
-				} else {
-					alert(errorMessage);
-				}
-				console.log(error);
+				setErrors(error);
 			});
 		setCurrentUser(firebase.auth().currentUser);
+		setErrors("");
 	};
 	const signUpWithEmail = (e) => {
 		e.preventDefault();
@@ -68,17 +62,10 @@ const App = () => {
 			.auth()
 			.createUserWithEmailAndPassword(signUpEmail, signUpPassword)
 			.catch((error) => {
-				// Handle Errors here.
-				let errorCode = error.code;
-				let errorMessage = error.message;
-				if (errorCode === "auth/weak-password") {
-					alert("The password is too weak.");
-				} else {
-					alert(errorMessage);
-				}
-				console.log(error);
+				setErrors(error);
 			});
 		setCurrentUser(firebase.auth().currentUser);
+		setErrors("");
 	};
 	const loginWithGoogle = (e) => {
 		let provider = new firebase.auth.GoogleAuthProvider();
@@ -119,6 +106,8 @@ const App = () => {
 								handleChange={(e) => handleChange(e)}
 								loginWithEmail={(e) => loginWithEmail(e)}
 								loginWithGoogle={(e) => loginWithGoogle(e)}
+								errors={errors}
+								resetErrors={() => setErrors("")}
 							/>
 						)
 					}
@@ -134,6 +123,8 @@ const App = () => {
 								handleChange={(e) => handleChange(e)}
 								loginWithEmail={(e) => loginWithEmail(e)}
 								loginWithGoogle={(e) => loginWithGoogle(e)}
+								errors={errors}
+								resetErrors={() => setErrors("")}
 							/>
 						)
 					}
@@ -149,6 +140,8 @@ const App = () => {
 								handleChange={(e) => handleChange(e)}
 								signUpWithEmail={(e) => signUpWithEmail(e)}
 								loginWithGoogle={(e) => loginWithGoogle(e)}
+								errors={errors}
+								resetErrors={() => setErrors("")}
 							/>
 						)
 					}

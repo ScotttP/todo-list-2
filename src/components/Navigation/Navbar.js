@@ -7,11 +7,19 @@ const Navbar = (props) => {
 			// this stops the app from crashing when there isnt a user signed in.
 			return (
 				<div id="navbarLeft">
-					<Link style={{ textDecoration: "none" }} to="/Login">
+					<Link
+						onClick={props.resetErrors}
+						style={{ textDecoration: "none" }}
+						to="/Login"
+					>
 						Login
 					</Link>
 
-					<Link style={{ textDecoration: "none" }} to="/SignUp">
+					<Link
+						onClick={props.resetErrors}
+						style={{ textDecoration: "none" }}
+						to="/SignUp"
+					>
 						SignUp
 					</Link>
 				</div>
@@ -34,11 +42,19 @@ const Navbar = (props) => {
 		else
 			return (
 				<div id="navbarLeft">
-					<Link style={{ textDecoration: "none" }} to="/Login">
+					<Link
+						onClick={props.resetErrors}
+						style={{ textDecoration: "none" }}
+						to="/Login"
+					>
 						Login
 					</Link>
 
-					<Link style={{ textDecoration: "none" }} to="/SignUp">
+					<Link
+						onClick={props.resetErrors}
+						style={{ textDecoration: "none" }}
+						to="/SignUp"
+					>
 						SignUp
 					</Link>
 				</div>

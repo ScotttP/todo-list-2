@@ -1,4 +1,5 @@
 import { React } from "react";
+import Error from "../Error";
 import { Link } from "react-router-dom";
 
 const SignUp = (props) => {
@@ -21,6 +22,7 @@ const SignUp = (props) => {
 					onChange={(e) => props.handleChange(e)}
 				></input>
 			</label>
+			<Error errors={props.errors} />
 			<button onClick={(e) => props.signUpWithEmail(e)}>Sign Up</button>
 			<br></br>
 			<p>or</p>
@@ -31,7 +33,7 @@ const SignUp = (props) => {
 			<br></br>
 			<p>Already have an account?</p>
 			<Link style={{ textDecoration: "none" }} to="/Login">
-				<button>Login</button>
+				<button onClick={props.resetErrors}>Login</button>
 			</Link>
 		</form>
 	);

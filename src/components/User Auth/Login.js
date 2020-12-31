@@ -1,5 +1,6 @@
 import { React } from "react";
 import { Link } from "react-router-dom";
+import Error from "../Error";
 
 const Login = (props) => {
 	return (
@@ -21,7 +22,7 @@ const Login = (props) => {
 					onChange={(e) => props.handleChange(e)}
 				></input>
 			</label>
-			<div>Error div</div>
+			<Error errors={props.errors} />
 			<button onClick={(e) => props.loginWithEmail(e)}>Login</button>
 			<br></br>
 			<p>or</p>
@@ -32,7 +33,7 @@ const Login = (props) => {
 			<br></br>
 			<p>Don't have an account?</p>
 			<Link style={{ textDecoration: "none" }} to="/SignUp">
-				<button>Sign Up</button>
+				<button onClick={props.resetErrors}>Sign Up</button>
 			</Link>
 		</form>
 	);
