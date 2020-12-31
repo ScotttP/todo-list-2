@@ -3,6 +3,20 @@ import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
 	const renderSignUpAndSignOutButton = () => {
+		if (props.currentUser === null)
+			// this stops the app from crashing when there isnt a user signed in.
+			return (
+				<div id="navbarLeft">
+					<Link style={{ textDecoration: "none" }} to="/Login">
+						Login
+					</Link>
+
+					<Link style={{ textDecoration: "none" }} to="/SignUp">
+						SignUp
+					</Link>
+				</div>
+			);
+
 		if (props.currentUser && props.currentUser.displayName !== null)
 			return (
 				<div id="navbarLeft">

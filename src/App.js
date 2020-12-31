@@ -61,7 +61,6 @@ const App = () => {
 				console.log(error);
 			});
 		setCurrentUser(firebase.auth().currentUser);
-		console.log(currentUser);
 	};
 	const signUpWithEmail = (e) => {
 		e.preventDefault();
@@ -80,13 +79,11 @@ const App = () => {
 				console.log(error);
 			});
 		setCurrentUser(firebase.auth().currentUser);
-		console.log(currentUser);
 	};
 	const loginWithGoogle = (e) => {
 		let provider = new firebase.auth.GoogleAuthProvider();
 		firebase.auth().signInWithPopup(provider);
 		setCurrentUser(firebase.auth().currentUser);
-		console.log(currentUser);
 	};
 
 	const signOut = () => {
@@ -99,8 +96,6 @@ const App = () => {
 		} else {
 			setCurrentUser("");
 		}
-		console.log(currentUser);
-		console.log(user);
 	};
 
 	useEffect(() => {
