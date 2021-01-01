@@ -8,67 +8,59 @@ import "firebase/firestore";
 const Projects = (props) => {
 	const [projectList, setProjectList] = useState([]);
 
-	const addToProjectList = () => {
+	const deleteFromProjectList = (index) => {
+		console.log(typeof projectList[index]);
+
+		firebase
+			.firestore()
+			.collection(`${props.currentUser.email}-projectList`)
+			.doc(projectList[index])
+			.delete()
+			.catch((error) => {
+				console.error("Error writing new message to database", error);
+			});
+		loadProjectListFromFirestore();
+		// let copyOfProjectList = [...projectList];
+		// copyOfProjectList.splice(index, 1);
+		// setProjectList(copyOfProjectList);
+	};
+
+	const saveProjectListToFireStore = () => {
 		let projectName = document.getElementById("addProjectInput").value;
+
 		if (
 			projectList.includes(projectName) ||
 			projectName === null ||
 			projectName === ""
 		)
 			return;
-		else {
-			setProjectList([...projectList, projectName]);
+		else
+			return firebase
+				.firestore()
+				.collection(`${props.currentUser.email}-projectList`)
+				.doc(`${projectName}`)
+				.set({
+					projectName: projectName,
+					userEmail: props.currentUser.email,
+					timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+				})
 
-			//saveProjectListToFireStore();
-		}
-		document.getElementById("addProjectInput").value = "";
-	};
-	const deleteFromProjectList = (index) => {
-		let copyOfProjectList = [...projectList];
-		copyOfProjectList.splice(index, 1);
-		setProjectList(copyOfProjectList);
-	};
-
-	const saveProjectListToFireStore = () => {
-		return firebase
-			.firestore()
-			.collection("projectList-test")
-			.add({
-				projectListTest: projectList,
-				userEmail: props.currentUser.email,
-				timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-			})
-			.catch((error) => {
-				console.error("Error writing new message to database", error);
-			});
+				.catch((error) => {
+					console.error("Error writing new message to database", error);
+				});
 	};
 
-	const loadProjectList = () => {
-		// Create the query to load the last 12 messages and listen for new ones.
+	const loadProjectListFromFirestore = () => {
 		let query = firebase
 			.firestore()
-			.collection("projectList-test")
-			.orderBy("timestamp", "asc")
-			.limit(10);
-
-		// Start listening to the query.
+			.collection(`${props.currentUser.email}-projectList`)
+			.orderBy("timestamp", "asc");
+		let array = [];
 		query.onSnapshot((snapshot) => {
 			snapshot.docChanges().forEach((change) => {
-				console.log(change.doc.data());
-				// if (change.type === "removed") {
-				// 	deleteMessage(change.doc.id);
-				// } else {
-				// 	message = change.doc.data();
-				// 	displayMessage(
-				// 		change.doc.id,
-				// 		message.timestamp,
-				// 		message.name,
-				// 		message.text,
-				// 		message.profilePicUrl,
-				// 		message.imageUrl
-				// 	);
-				// }
+				array.push(change.doc.data().projectName);
 			});
+			setProjectList(array);
 		});
 	};
 
@@ -83,12 +75,14 @@ const Projects = (props) => {
 		));
 	};
 
-	useEffect(() => {
+	const doubleFunction = () => {
 		saveProjectListToFireStore();
-	}, [projectList]);
+		loadProjectListFromFirestore();
+		document.getElementById("addProjectInput").value = "";
+	};
 
 	useEffect(() => {
-		loadProjectList();
+		loadProjectListFromFirestore();
 	}, []);
 
 	return (
@@ -98,7 +92,7 @@ const Projects = (props) => {
 				<h4>View All</h4>
 				{projectCardRendering()}
 			</ul>
-			<span onClick={() => addToProjectList()}>+</span> {""} {""}
+			<span onClick={() => doubleFunction()}>+</span> {""} {""}
 			<input id="addProjectInput" type="text" placeholder="Add Project..." />
 		</aside>
 	);

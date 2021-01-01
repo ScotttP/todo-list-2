@@ -3,13 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ProjectCard = (props) => {
-	console.log(props.element);
 	return (
 		<div id="projectCardContainer">
 			<h4>{props.element}</h4>
 			<FontAwesomeIcon
 				id="deleteProject"
-				onClick={props.deleteFromProjectList}
+				onClick={() => props.deleteFromProjectList(props)}
 				icon={faTimes}
 			></FontAwesomeIcon>
 		</div>
