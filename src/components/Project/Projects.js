@@ -9,8 +9,6 @@ const Projects = (props) => {
 	const [projectList, setProjectList] = useState([]);
 
 	const deleteFromProjectList = (index) => {
-		console.log(typeof projectList[index]);
-
 		firebase
 			.firestore()
 			.collection(`${props.currentUser.email}-projectList`)
@@ -19,6 +17,7 @@ const Projects = (props) => {
 			.catch((error) => {
 				console.error("Error writing new message to database", error);
 			});
+
 		loadProjectListFromFirestore();
 		// let copyOfProjectList = [...projectList];
 		// copyOfProjectList.splice(index, 1);
@@ -58,7 +57,10 @@ const Projects = (props) => {
 		let array = [];
 		query.onSnapshot((snapshot) => {
 			snapshot.docChanges().forEach((change) => {
-				array.push(change.doc.data().projectName);
+				if (array.includes(change.doc.data().projectName)) return;
+				else array.push(change.doc.data().projectName);
+				console.log(array);
+				// console.log(array);
 			});
 			setProjectList(array);
 		});
