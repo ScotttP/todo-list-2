@@ -19,14 +19,12 @@ const Projects = (props) => {
 			});
 
 		// loadProjectListFromFirestore();
-		// let copyOfProjectList = [...projectList];
-		// copyOfProjectList.splice(index, 1);
-		// setProjectList(copyOfProjectList);
+		getProjectListFromFirestoreOnLoad();
 	};
 
 	const saveProjectListToFireStore = () => {
 		let projectName = document.getElementById("addProjectInput").value;
-
+		console.log(projectList.includes(projectName));
 		if (
 			projectList.includes(projectName) ||
 			projectName === null ||
@@ -49,43 +47,24 @@ const Projects = (props) => {
 				});
 	};
 
-	const loadProjectListFromFirestore = () => {
-		let query = firebase
+	const getProjectListFromFirestoreOnLoad = () => {
+		let array = [];
+		firebase
 			.firestore()
 			.collection(`${props.currentUser.email}-projectList`)
-			.orderBy("timestamp", "asc");
-
-		query.onSnapshot((snapshot) => {
-			snapshot.docChanges().forEach((change) => {
-				if (
-					!projectList.includes(change.doc.data().projectName) &&
-					change.type !== "modified"
-				) {
-					if (change.type === "added") {
-						setProjectList((prevState) => {
-							return [...prevState, change.doc.data().projectName];
-						});
-					}
-				} else if (change.type === "removed") {
-					console.log("this was removed");
-					// setProjectList((prevState) => {
-					// 	prevState.splice(
-					// 		prevState.indexOf(change.doc.data().projectName, 1)
-					// 	);
-					// 	console.log(prevState);
-					// });
-				}
-
-				// console.log(change.type);
+			.get()
+			.then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					array = [...array, doc.data().projectName];
+				});
+				setProjectList(array);
 			});
-		});
-
-		console.log("load project list from firestore");
+		console.log(projectList);
 	};
 
 	const projectCardRendering = () => {
 		console.log("renderFunctionisCalled");
-
+		console.log(projectList);
 		return projectList.map((element, index) => (
 			<ProjectCard
 				key={uniqid()}
@@ -98,15 +77,17 @@ const Projects = (props) => {
 
 	const doubleFunction = () => {
 		saveProjectListToFireStore();
-		console.log(projectList);
-		// loadProjectListFromFirestore();
-		console.log(projectList);
+		getProjectListFromFirestoreOnLoad();
 		document.getElementById("addProjectInput").value = "";
 	};
 
 	useEffect(() => {
-		loadProjectListFromFirestore();
+		getProjectListFromFirestoreOnLoad();
 	}, []);
+
+	useEffect(() => {
+		//getProjectListFromFirestoreOnLoad();
+	}, [projectList]);
 
 	return (
 		<aside id="projectsContainer">
@@ -122,3 +103,34 @@ const Projects = (props) => {
 };
 
 export default Projects;
+
+// const loadProjectListFromFirestore = () => {
+// 	// 	let query = firebase
+// 	// 		.firestore()
+// 	// 		.collection(`${props.currentUser.email}-projectList`)
+// 	// 		.orderBy("timestamp", "asc");
+// 	// 	query.onSnapshot((snapshot) => {
+// 	// 		snapshot.docChanges().forEach((change) => {
+// 	// 			console.log(change.type, change.doc.data().projectName);
+// 	// 			if (
+// 	// 				!projectList.includes(change.doc.data().projectName) &&
+// 	// 				change.type !== "modified"
+// 	// 			) {
+// 	// 				setProjectList((prevState) => {
+// 	// 					return [...prevState, change.doc.data().projectName];
+// 	// 				});
+// 	// 			}
+// 	// 			// 	console.log("state was set");
+// 	// 			// 	console.log(projectList);
+// 	// 			// } else if (change.type === "removed") {
+// 	// 			// 	projectList.indexOf(change.doc.data().projectName);
+// 	// 			// 	// setProjectList((prevState) => {
+// 	// 			// 	// 	prevState.splice(
+// 	// 			// 	// 		prevState.indexOf(change.doc.data().projectName, 1)
+// 	// 			// 	// 	);
+// 	// 			// 	// 	console.log(prevState);
+// 	// 			// 	// });
+// 	// 			// }
+// 	// 		});
+// 	// 	});
+// 	// };
