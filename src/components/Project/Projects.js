@@ -18,7 +18,7 @@ const Projects = (props) => {
 				console.error("Error writing new message to database", error);
 			});
 
-		loadProjectListFromFirestore();
+		// loadProjectListFromFirestore();
 		// let copyOfProjectList = [...projectList];
 		// copyOfProjectList.splice(index, 1);
 		// setProjectList(copyOfProjectList);
@@ -54,19 +54,38 @@ const Projects = (props) => {
 			.firestore()
 			.collection(`${props.currentUser.email}-projectList`)
 			.orderBy("timestamp", "asc");
-		let array = [];
+
 		query.onSnapshot((snapshot) => {
 			snapshot.docChanges().forEach((change) => {
-				if (array.includes(change.doc.data().projectName)) return;
-				else array.push(change.doc.data().projectName);
-				console.log(array);
-				// console.log(array);
+				if (
+					!projectList.includes(change.doc.data().projectName) &&
+					change.type !== "modified"
+				) {
+					if (change.type === "added") {
+						setProjectList((prevState) => {
+							return [...prevState, change.doc.data().projectName];
+						});
+					}
+				} else if (change.type === "removed") {
+					console.log("this was removed");
+					// setProjectList((prevState) => {
+					// 	prevState.splice(
+					// 		prevState.indexOf(change.doc.data().projectName, 1)
+					// 	);
+					// 	console.log(prevState);
+					// });
+				}
+
+				// console.log(change.type);
 			});
-			setProjectList(array);
 		});
+
+		console.log("load project list from firestore");
 	};
 
 	const projectCardRendering = () => {
+		console.log("renderFunctionisCalled");
+
 		return projectList.map((element, index) => (
 			<ProjectCard
 				key={uniqid()}
@@ -79,7 +98,9 @@ const Projects = (props) => {
 
 	const doubleFunction = () => {
 		saveProjectListToFireStore();
-		loadProjectListFromFirestore();
+		console.log(projectList);
+		// loadProjectListFromFirestore();
+		console.log(projectList);
 		document.getElementById("addProjectInput").value = "";
 	};
 
