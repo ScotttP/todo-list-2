@@ -14,6 +14,10 @@ body {
 	width: 100%;
 }
 
+#root {
+	height: 100vh;
+}
+
 /* NAVBAR */
 #navbarContainer {
 	background-color: #1f1f1f;
@@ -45,6 +49,8 @@ a:hover {
 /* Main Display */
 #projectsAndTodosDisplay {
 	display: flex;
+	justify-content: center;
+
 	margin-top: 3%;
 	height: 100%;
 	flex-grow: 1;
@@ -90,9 +96,37 @@ a:hover {
 	background-color: #272626;
 	margin-right: 5%;
 }
+
+#todosHeader {
+	text-align: center;
+	margin-bottom: 10px;
+}
 .todoCardContainer {
+	display: flex;
+	flex-direction: column;
+
+	width: 80%;
+	height: fit-content;
+	padding: 2% 5% 2% 5%;
+	margin: 2%;
+	background-color: #383636;
+}
+
+.todoCardMainDisplay {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.todoCardExpandedViewDisplay {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 15px;
+}
+
+.todoCardFormDisplay {
+	display: flex;
+	justify-content: space-between;
 	width: 100%;
-	text-align: left;
 }
 .mainTodoView {
 	display: flex;
@@ -107,6 +141,10 @@ textarea {
 }
 #todoListTable {
 	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 #tableHeaders {

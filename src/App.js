@@ -152,7 +152,7 @@ const App = () => {
 					render={() =>
 						currentUser ? (
 							<div id="projectsAndTodosDisplay">
-								<Projects currentUser={currentUser}></Projects>
+								{/* <Projects currentUser={currentUser}></Projects> */}
 								<Todos></Todos>
 							</div>
 						) : (

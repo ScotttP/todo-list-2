@@ -1,39 +1,30 @@
 import { React, useState } from "react";
-import TodoCard from "./TodoCard";
-import AddTodoWindow from "./AddTodoWindow";
-import ExpandedViewTodoCard from "./ExpandedViewTodoCard";
+import TodoCardDisplay from "./TodoCardDisplay";
+import TodoCardForm from "./TodoCardForm";
 
 const Todos = () => {
-	const [extendedViewDisplay, setExtendedViewDisplay] = useState("none");
+	const [formViewDisplay, setformViewDisplay] = useState("none");
 
-	const toggleExtendedViewDisplay = () => {
-		setExtendedViewDisplay((prevState) => {
-			if (prevState === "none") return "inline";
-			else return "none";
-		});
-	};
+	// const toggleExtendedViewDisplay = () => {
+	// 	setExtendedViewDisplay((prevState) => {
+	// 		if (prevState === "none") return "flex";
+	// 		else return "none";
+	// 	});
+	// };
 	return (
 		<main id="todosContainer">
-			<h2>To-Do Items</h2>
-			<button>+ Add Todo</button>
-			<table id="todoListTable">
-				<thead id="tableHeaders">
-					<tr>
-						<th>Completed</th>
-						<th>Task Name</th>
-						<th>Due Date</th>
-						<th>Priority</th>
-					</tr>
-				</thead>
-				<tbody>
-					<TodoCard toggleExpandedView={toggleExtendedViewDisplay}></TodoCard>
-					<ExpandedViewTodoCard
-						view={extendedViewDisplay}
-					></ExpandedViewTodoCard>
-				</tbody>
-			</table>
+			<div id="todosHeader">
+				<h2>To-Do Items</h2>
+				<button onClick={() => setformViewDisplay("flex")}>Add New Todo</button>
+			</div>
 
-			{/* <AddTodoWindow></AddTodoWindow> */}
+			<div id="todoListTable">
+				<TodoCardForm
+					display={formViewDisplay}
+					hideForm={() => setformViewDisplay("none")}
+				/>
+				<TodoCardDisplay></TodoCardDisplay>
+			</div>
 		</main>
 	);
 };
