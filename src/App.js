@@ -26,6 +26,8 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+const firestore = firebase.firestore();
+
 const App = () => {
 	const [loginEmail, setLoginEmail] = useState("");
 	const [loginPassword, setLoginPassword] = useState("");
@@ -153,7 +155,7 @@ const App = () => {
 						currentUser ? (
 							<div id="projectsAndTodosDisplay">
 								{/* <Projects currentUser={currentUser}></Projects> */}
-								<Todos></Todos>
+								<Todos firestore={firestore}></Todos>
 							</div>
 						) : (
 							<div>Need to login or sign up to see this page.</div>
