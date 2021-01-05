@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 
-const TodoCardDisplay = () => {
+const TodoCardDisplay = (props) => {
 	const [extendedViewDisplay, setExtendedViewDisplay] = useState("none");
 
 	const toggleExtendedViewDisplay = () => {
@@ -14,9 +14,9 @@ const TodoCardDisplay = () => {
 			<div className="todoCardMainDisplay">
 				<input type="checkbox"></input>
 				<button onClick={toggleExtendedViewDisplay}>expand</button>
-				<p>Task Name</p>
-				<p>12/25/2020</p>
-				<p>Medium</p>
+				<p>{props.todo.name}</p>
+				<p>{props.todo.dueDate}</p>
+				<p>{props.todo.priority}</p>
 				<button>Delete</button>
 			</div>
 
@@ -24,7 +24,7 @@ const TodoCardDisplay = () => {
 				className="todoCardExpandedViewDisplay "
 				style={{ display: extendedViewDisplay }}
 			>
-				<p>Details of the task are displayed here</p>
+				<p>{props.todo.description}</p>
 				<div>
 					<button>Edit</button>
 				</div>

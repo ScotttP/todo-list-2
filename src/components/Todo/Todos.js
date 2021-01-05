@@ -1,15 +1,20 @@
 import { React, useState } from "react";
 import TodoCardDisplay from "./TodoCardDisplay";
 import TodoCardForm from "./TodoCardForm";
-import firebase from "firebase/app";
+import firebase from "../../firebaseConfig";
 import "firebase/auth";
 import "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+const firestore = firebase.firestore();
 
 const Todos = (props) => {
-	const todosRef = props.firestore.collection("todos");
-	const todosQuery = todosRef.orderBy("createdAt");
+	//console.log(props.firestore.collection("todos").orderBy(''));
+
+	const todosRef = firestore.collection("todos");
+	const todosQuery = todosRef.orderBy("name");
 	const [formViewDisplay, setformViewDisplay] = useState("none");
+
+	const [todos] = useCollectionData(todosQuery, { idField: "id" });
 
 	const [todoName, setTodoName] = useState("");
 	const [todoDescription, setTodoDescription] = useState("");
@@ -39,7 +44,8 @@ const Todos = (props) => {
 		setTodoDueDate("");
 		setTodoPriority("");
 	};
-
+	console.log(todos);
+	console.log(todosQuery);
 	return (
 		<main id="todosContainer">
 			<div id="todosHeader">
@@ -61,7 +67,9 @@ const Todos = (props) => {
 					todoDueDate={todoDueDate}
 					todoPriority={todoPriority}
 				/>
-				<TodoCardDisplay></TodoCardDisplay>
+				{todos.map((todo) => (
+					<TodoCardDisplay key={todos.id} todo={todo} />
+				))}
 			</div>
 		</main>
 	);
