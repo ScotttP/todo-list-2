@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import TodoCardDisplay from "./TodoCardDisplay";
-import TodoCardForm from "./TodoCardForm";
+import NewTodoCardForm from "./NewTodoCardForm";
 import firebase from "../../firebaseConfig";
 import "firebase/auth";
 import "firebase/firestore";
@@ -8,44 +8,61 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 const firestore = firebase.firestore();
 
 const Todos = (props) => {
-	//console.log(props.firestore.collection("todos").orderBy(''));
-
 	const todosRef = firestore.collection("todos");
 	const todosQuery = todosRef.orderBy("name");
 	const [formViewDisplay, setformViewDisplay] = useState("none");
 
 	const [todos] = useCollectionData(todosQuery, { idField: "id" });
 
-	const [todoName, setTodoName] = useState("");
-	const [todoDescription, setTodoDescription] = useState("");
-	const [todoDueDate, setTodoDueDate] = useState("");
-	const [todoPriority, setTodoPriority] = useState("");
+	const [newTodo, setNewTodo] = useState({
+		todo: {
+			name: "",
+			description: "",
+			dueDate: "",
+			priority: "",
+			completed: false,
+		},
+	});
 
 	const handleFormChange = (e) => {
-		if (e.target.name === "todoName") return setTodoName(e.target.value);
-		if (e.target.name === "todoDescription")
-			return setTodoDescription(e.target.value);
-		if (e.target.name === "todoDueDate") return setTodoDueDate(e.target.value);
-		if (e.target.name === "todoPriority")
-			return setTodoPriority(e.target.value);
+		setNewTodo((prevState) => ({
+			todo: { ...prevState.todo, [e.target.name]: e.target.value },
+		}));
 	};
 
 	const addTodo = async (e) => {
 		e.preventDefault();
 
 		await todosRef.add({
-			name: todoName,
-			description: todoDescription,
-			dueDate: todoDueDate,
-			priority: todoPriority,
+			name: newTodo.todo.name,
+			description: newTodo.todo.description,
+			dueDate: newTodo.todo.dueDate,
+			priority: newTodo.todo.priority,
+			completed: newTodo.todo.completed,
 		});
-		setTodoName("");
-		setTodoDescription("");
-		setTodoDueDate("");
-		setTodoPriority("");
+
+		setNewTodo({
+			todo: {
+				name: "",
+				description: "",
+				dueDate: "",
+				priority: "",
+				completed: false,
+			},
+		});
 	};
-	console.log(todos);
-	console.log(todosQuery);
+
+	const deleteTodo = (todo) => {
+		todosRef
+			.doc(`${todo.id}`)
+			.delete()
+			.catch((error) => console.log(error));
+	};
+
+	const updateTodo = (e) => {
+		console.log("update todo");
+	};
+
 	return (
 		<main id="todosContainer">
 			<div id="todosHeader">
@@ -54,7 +71,7 @@ const Todos = (props) => {
 			</div>
 
 			<div id="todoListTable">
-				<TodoCardForm
+				<NewTodoCardForm
 					display={formViewDisplay}
 					hideForm={(e) => {
 						e.preventDefault();
@@ -62,14 +79,20 @@ const Todos = (props) => {
 					}}
 					handleFormChange={(e) => handleFormChange(e)}
 					addTodo={(e) => addTodo(e)}
-					todoName={todoName}
-					todoDescription={todoDescription}
-					todoDueDate={todoDueDate}
-					todoPriority={todoPriority}
+					newTodo={newTodo}
 				/>
-				{todos.map((todo) => (
-					<TodoCardDisplay key={todos.id} todo={todo} />
-				))}
+				{todos &&
+					todos.map((todo) => (
+						<TodoCardDisplay
+							key={todos.id}
+							todo={todo}
+							deleteTodo={() => deleteTodo(todo)}
+							handleFormChange={(e) => handleFormChange(e)}
+							addTodo={(e) => addTodo(e)}
+							newTodo={newTodo}
+							updateTodo={(e) => updateTodo(e)}
+						/>
+					))}
 			</div>
 		</main>
 	);

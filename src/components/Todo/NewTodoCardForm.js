@@ -1,33 +1,40 @@
 import React from "react";
 
-const TodoCardForm = (props) => {
+const NewTodoCardForm = (props) => {
 	return (
 		<div className="todoCardContainer" style={{ display: props.display }}>
 			<form className="todoCardFormDisplay" onSubmit={(e) => props.addTodo(e)}>
 				<input
 					onChange={(e) => props.handleFormChange(e)}
-					name="todoName"
+					name="name"
 					type="text"
 					placeholder="Enter your todo name..."
-					value={props.todoName}
+					value={props.newTodo.todo.name}
+					required
 				></input>
 
 				<input
 					onChange={(e) => props.handleFormChange(e)}
-					name="todoDescription"
+					name="description"
 					type="text"
 					placeholder="Description..."
-					value={props.todoDescription}
+					value={props.newTodo.todo.description}
+					required
 				></input>
 
 				<input
 					onChange={(e) => props.handleFormChange(e)}
-					name="todoDueDate"
+					name="dueDate"
 					type="date"
-					value={props.todoDueDate}
+					value={props.newTodo.todo.dueDate}
+					required
 				></input>
 
-				<select name="todoPriority" onChange={(e) => props.handleFormChange(e)}>
+				<select
+					name="priority"
+					onChange={(e) => props.handleFormChange(e)}
+					required
+				>
 					<option>Low</option>
 					<option>Medium</option>
 					<option>High</option>
@@ -39,4 +46,4 @@ const TodoCardForm = (props) => {
 	);
 };
 
-export default TodoCardForm;
+export default NewTodoCardForm;
