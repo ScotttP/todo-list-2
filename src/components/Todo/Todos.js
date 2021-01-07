@@ -35,13 +35,36 @@ const Todos = () => {
 	});
 
 	const handleNewTodo = (e) => {
-		console.log(e.target.value);
 		setNewTodo((prevState) =>
 			// console.log(prevState)
 			({
 				todo: { ...prevState.todo, [e.target.name]: e.target.value },
 			})
 		);
+	};
+
+	const handleUpdateTodo = (e) => {
+		setCurrentTodo((prevState) => ({
+			todo: { ...prevState.todo, [e.target.name]: e.target.value },
+		}));
+	};
+
+	const setAsCurrentTodo = (
+		name,
+		description,
+		dueDate,
+		priority,
+		completed
+	) => {
+		// setAsCurrentTodo({
+		// 	todo: {
+		// 		name: name,
+		// 		description: "test",
+		// 		dueDate: "12/23/2019",
+		// 		priority: "Low",
+		// 		completed: false,
+		// 	},
+		// });
 	};
 
 	const addTodo = async (e) => {
@@ -73,18 +96,7 @@ const Todos = () => {
 			.catch((error) => console.log(error));
 	};
 
-	const handleUpdateTodo = (e) => {
-		console.log(e.target.value);
-		setCurrentTodo((prevState) =>
-			// console.log(prevState)
-			({
-				todo: { ...prevState.todo, [e.target.name]: e.target.value },
-			})
-		);
-	};
-
 	const updateTodo = (todo) => {
-		// e.preventDefault();
 		console.log(currentTodo.todo.name);
 		todosRef.doc(todo.id).update({
 			name: currentTodo.todo.name,
@@ -92,6 +104,15 @@ const Todos = () => {
 			dueDate: currentTodo.todo.dueDate,
 			priority: currentTodo.todo.priority,
 			completed: currentTodo.todo.completed,
+		});
+		setCurrentTodo({
+			todo: {
+				name: "",
+				description: "",
+				dueDate: "",
+				priority: "",
+				completed: false,
+			},
 		});
 	};
 
@@ -119,10 +140,12 @@ const Todos = () => {
 							key={todos.id}
 							todo={todo}
 							currentTodo={currentTodo}
+							newTodo={newTodo}
 							deleteTodo={() => deleteTodo(todo)}
 							handleUpdateTodo={(e) => handleUpdateTodo(e)}
 							addTodo={(e) => addTodo(e)}
 							updateTodo={(e) => updateTodo(e)}
+							setAsCurrentTodo={() => setAsCurrentTodo()}
 						/>
 					))}
 			</div>

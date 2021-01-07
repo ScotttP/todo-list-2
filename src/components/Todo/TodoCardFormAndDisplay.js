@@ -24,6 +24,11 @@ const TodoCardFormAndDisplay = (props) => {
 		props.updateTodo(props.todo);
 	};
 
+	const editButtonWrapperFunction = () => {
+		toggleEditMode();
+		props.setAsCurrentTodo();
+	};
+
 	if (editTodoMode) {
 		return (
 			<div className="todoCardContainer">
@@ -90,7 +95,7 @@ const TodoCardFormAndDisplay = (props) => {
 				>
 					<p>{props.todo.description}</p>
 					<div>
-						<button onClick={toggleEditMode}>Edit</button>
+						<button onClick={() => editButtonWrapperFunction()}>Edit</button>
 					</div>
 				</div>
 			</div>
