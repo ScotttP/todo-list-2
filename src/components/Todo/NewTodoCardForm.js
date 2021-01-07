@@ -5,7 +5,7 @@ const NewTodoCardForm = (props) => {
 		<div className="todoCardContainer" style={{ display: props.display }}>
 			<form className="todoCardFormDisplay" onSubmit={(e) => props.addTodo(e)}>
 				<input
-					onChange={(e) => props.handleFormChange(e)}
+					onChange={(e) => props.handleNewTodo(e)}
 					name="name"
 					type="text"
 					placeholder="Enter your todo name..."
@@ -14,7 +14,7 @@ const NewTodoCardForm = (props) => {
 				></input>
 
 				<input
-					onChange={(e) => props.handleFormChange(e)}
+					onChange={(e) => props.handleNewTodo(e)}
 					name="description"
 					type="text"
 					placeholder="Description..."
@@ -23,7 +23,7 @@ const NewTodoCardForm = (props) => {
 				></input>
 
 				<input
-					onChange={(e) => props.handleFormChange(e)}
+					onChange={(e) => props.handleNewTodo(e)}
 					name="dueDate"
 					type="date"
 					value={props.newTodo.todo.dueDate}
@@ -32,7 +32,7 @@ const NewTodoCardForm = (props) => {
 
 				<select
 					name="priority"
-					onChange={(e) => props.handleFormChange(e)}
+					onChange={(e) => props.handleNewTodo(e)}
 					required
 				>
 					<option>Low</option>

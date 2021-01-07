@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import TodoCardDisplay from "./TodoCardDisplay";
+import TodoCardFormAndDisplay from "./TodoCardFormAndDisplay";
 import NewTodoCardForm from "./NewTodoCardForm";
 import firebase from "../../firebaseConfig";
 import "firebase/auth";
@@ -7,7 +7,7 @@ import "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 const firestore = firebase.firestore();
 
-const Todos = (props) => {
+const Todos = () => {
 	const todosRef = firestore.collection("todos");
 	const todosQuery = todosRef.orderBy("name");
 	const [formViewDisplay, setformViewDisplay] = useState("none");
@@ -24,10 +24,24 @@ const Todos = (props) => {
 		},
 	});
 
-	const handleFormChange = (e) => {
-		setNewTodo((prevState) => ({
-			todo: { ...prevState.todo, [e.target.name]: e.target.value },
-		}));
+	const [currentTodo, setCurrentTodo] = useState({
+		todo: {
+			name: "",
+			description: "",
+			dueDate: "",
+			priority: "",
+			completed: false,
+		},
+	});
+
+	const handleNewTodo = (e) => {
+		console.log(e.target.value);
+		setNewTodo((prevState) =>
+			// console.log(prevState)
+			({
+				todo: { ...prevState.todo, [e.target.name]: e.target.value },
+			})
+		);
 	};
 
 	const addTodo = async (e) => {
@@ -59,8 +73,26 @@ const Todos = (props) => {
 			.catch((error) => console.log(error));
 	};
 
-	const updateTodo = (e) => {
-		console.log("update todo");
+	const handleUpdateTodo = (e) => {
+		console.log(e.target.value);
+		setCurrentTodo((prevState) =>
+			// console.log(prevState)
+			({
+				todo: { ...prevState.todo, [e.target.name]: e.target.value },
+			})
+		);
+	};
+
+	const updateTodo = (todo) => {
+		// e.preventDefault();
+		console.log(currentTodo.todo.name);
+		todosRef.doc(todo.id).update({
+			name: currentTodo.todo.name,
+			description: currentTodo.todo.description,
+			dueDate: currentTodo.todo.dueDate,
+			priority: currentTodo.todo.priority,
+			completed: currentTodo.todo.completed,
+		});
 	};
 
 	return (
@@ -77,19 +109,19 @@ const Todos = (props) => {
 						e.preventDefault();
 						setformViewDisplay("none");
 					}}
-					handleFormChange={(e) => handleFormChange(e)}
+					handleNewTodo={(e) => handleNewTodo(e)}
 					addTodo={(e) => addTodo(e)}
 					newTodo={newTodo}
 				/>
 				{todos &&
 					todos.map((todo) => (
-						<TodoCardDisplay
+						<TodoCardFormAndDisplay
 							key={todos.id}
 							todo={todo}
+							currentTodo={currentTodo}
 							deleteTodo={() => deleteTodo(todo)}
-							handleFormChange={(e) => handleFormChange(e)}
+							handleUpdateTodo={(e) => handleUpdateTodo(e)}
 							addTodo={(e) => addTodo(e)}
-							newTodo={newTodo}
 							updateTodo={(e) => updateTodo(e)}
 						/>
 					))}
