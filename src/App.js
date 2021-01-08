@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navigation/Navbar";
-
+import ForgotPassword from "./components/User Auth/ForgotPassword";
 import Todos from "./components/Todo/Todos";
 import Login from "./components/User Auth/Login";
 import SignUp from "./components/User Auth/SignUp";
@@ -42,6 +42,7 @@ const App = () => {
 				setErrors(error);
 			});
 		setCurrentUser(firebaseAuth.currentUser);
+
 		setErrors("");
 	};
 	const signUpWithEmail = (e) => {
@@ -139,13 +140,16 @@ const App = () => {
 					render={() =>
 						currentUser ? (
 							<div id="projectsAndTodosDisplay">
-								<Todos></Todos>
+								<Todos currentUser={currentUser}></Todos>
 							</div>
 						) : (
 							<div>Need to login or sign up to see this page.</div>
 						)
 					}
 				></Route>
+				<Route path="/ForgotPassword">
+					<ForgotPassword />
+				</Route>
 			</Switch>
 		</Router>
 	);

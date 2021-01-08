@@ -7,7 +7,7 @@ import "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 const firestore = firebase.firestore();
 
-const Todos = () => {
+const Todos = (props) => {
 	const [filterData, setFilterData] = useState("dueDate");
 	const [filterOrderBy, setFilterOrderBy] = useState("asc");
 	const todosRef = firestore.collection("todos");
@@ -15,6 +15,8 @@ const Todos = () => {
 	const [formViewDisplay, setformViewDisplay] = useState("none");
 
 	const [todos] = useCollectionData(todosQuery, { idField: "id" });
+
+	console.log(props.currentUser);
 
 	const handleFilter = (e) => {
 		const optionSelected = e.target.value;

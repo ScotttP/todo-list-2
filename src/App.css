@@ -155,16 +155,21 @@ textarea {
 
 /* Login/SignUp Container */
 
+#formDiv {
+	height: 90vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 #signUpAndLoginContainer {
 	background-color: #272626;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+
 	align-items: center;
-	width: 50vw;
-	height: 30vh;
-	position: absolute;
-	left: 25%;
-	top: 30%;
+	width: 25vw;
+	height: 55vh;
 }
 /* Login/SignUp Container */
