@@ -19,18 +19,15 @@ const Todos = () => {
 			name: "",
 			description: "",
 			dueDate: "",
-			priority: "",
+			priority: "Low",
 			completed: false,
 		},
 	});
 
 	const handleNewTodo = (e) => {
-		setNewTodo((prevState) =>
-			// console.log(prevState)
-			({
-				todo: { ...prevState.todo, [e.target.name]: e.target.value },
-			})
-		);
+		setNewTodo((prevState) => ({
+			todo: { ...prevState.todo, [e.target.name]: e.target.value },
+		}));
 	};
 
 	const addTodo = async (e) => {
@@ -49,7 +46,7 @@ const Todos = () => {
 				name: "",
 				description: "",
 				dueDate: "",
-				priority: "",
+				priority: "Low",
 				completed: false,
 			},
 		});

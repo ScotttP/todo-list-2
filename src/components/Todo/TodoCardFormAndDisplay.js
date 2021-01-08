@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import firebase from "../../firebaseConfig";
 import "firebase/auth";
 import "firebase/firestore";
@@ -9,6 +9,7 @@ const todosQuery = todosRef.orderBy("name");
 const TodoCardFormAndDisplay = (props) => {
 	const [extendedViewDisplay, setExtendedViewDisplay] = useState("none");
 	const [editTodoMode, setEditTodoMode] = useState(false);
+
 	const [todoName, setTodoName] = useState(props.todo.name);
 	const [todoDescription, setTodoDescription] = useState(
 		props.todo.description
@@ -18,14 +19,23 @@ const TodoCardFormAndDisplay = (props) => {
 	const [todoCompleted, setTodoCompleted] = useState(props.todo.completed);
 
 	const updateTodo = async () => {
-		await todosRef.doc(props.todo.id).update({
-			name: todoName,
-			description: todoDescription,
-			dueDate: todoDueDate,
-			priority: todoPriority,
-			completed: todoCompleted,
-		});
+		await todosRef
+			.doc(props.todo.id)
+			.update({
+				name: todoName,
+				description: todoDescription,
+				dueDate: todoDueDate,
+				priority: todoPriority,
+				completed: todoCompleted,
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
+
+	useEffect(() => {
+		updateTodo();
+	}, [todoName, todoDescription, todoDueDate, todoPriority, todoCompleted]);
 
 	const deleteTodo = () => {
 		todosRef
@@ -46,13 +56,11 @@ const TodoCardFormAndDisplay = (props) => {
 			if (prevState === false) return true;
 			else return false;
 		});
-		console.log("toggleeditmode");
 	};
 
 	const saveButtonWrapperFunction = () => {
 		toggleEditMode();
 		toggleExtendedViewDisplay();
-		updateTodo();
 	};
 
 	const editButtonWrapperFunction = () => {
@@ -66,6 +74,11 @@ const TodoCardFormAndDisplay = (props) => {
 					className="todoCardFormDisplay"
 					onSubmit={() => saveButtonWrapperFunction()}
 				>
+					<input
+						type="checkbox"
+						onClick={(e) => setTodoCompleted(e.target.checked)}
+						defaultChecked={todoCompleted}
+					></input>
 					<input
 						onChange={(e) => setTodoName(e.target.value)}
 						name="name"
@@ -110,7 +123,11 @@ const TodoCardFormAndDisplay = (props) => {
 		return (
 			<div className="todoCardContainer">
 				<div className="todoCardMainDisplay">
-					<input type="checkbox"></input>
+					<input
+						type="checkbox"
+						onClick={(e) => setTodoCompleted(e.target.checked)}
+						defaultChecked={todoCompleted}
+					></input>
 					<button onClick={toggleExtendedViewDisplay}>expand</button>
 					<p>{props.todo.name}</p>
 					<p>{props.todo.dueDate}</p>
@@ -124,7 +141,7 @@ const TodoCardFormAndDisplay = (props) => {
 				>
 					<p>{props.todo.description}</p>
 					<div>
-						<button onClick={() => editButtonWrapperFunction()}>Edit</button>
+						<button onClick={toggleEditMode}>Edit</button>
 					</div>
 				</div>
 			</div>
