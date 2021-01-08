@@ -63,10 +63,6 @@ const TodoCardFormAndDisplay = (props) => {
 		toggleExtendedViewDisplay();
 	};
 
-	const editButtonWrapperFunction = () => {
-		toggleEditMode();
-	};
-
 	if (editTodoMode) {
 		return (
 			<div className="todoCardContainer">
