@@ -1,8 +1,38 @@
 import { React, useState } from "react";
+import firebase from "../../firebaseConfig";
+import "firebase/auth";
+import "firebase/firestore";
+const firestore = firebase.firestore();
+const todosRef = firestore.collection("todos");
+const todosQuery = todosRef.orderBy("name");
 
 const TodoCardFormAndDisplay = (props) => {
 	const [extendedViewDisplay, setExtendedViewDisplay] = useState("none");
 	const [editTodoMode, setEditTodoMode] = useState(false);
+	const [todoName, setTodoName] = useState(props.todo.name);
+	const [todoDescription, setTodoDescription] = useState(
+		props.todo.description
+	);
+	const [todoDueDate, setTodoDueDate] = useState(props.todo.dueDate);
+	const [todoPriority, setTodoPriority] = useState(props.todo.priority);
+	const [todoCompleted, setTodoCompleted] = useState(props.todo.completed);
+
+	const updateTodo = async () => {
+		await todosRef.doc(props.todo.id).update({
+			name: todoName,
+			description: todoDescription,
+			dueDate: todoDueDate,
+			priority: todoPriority,
+			completed: todoCompleted,
+		});
+	};
+
+	const deleteTodo = () => {
+		todosRef
+			.doc(`${props.todo.id}`)
+			.delete()
+			.catch((error) => console.log(error));
+	};
 
 	const toggleExtendedViewDisplay = () => {
 		setExtendedViewDisplay((prevState) => {
@@ -21,12 +51,12 @@ const TodoCardFormAndDisplay = (props) => {
 
 	const saveButtonWrapperFunction = () => {
 		toggleEditMode();
-		props.updateTodo(props.todo);
+		toggleExtendedViewDisplay();
+		updateTodo();
 	};
 
 	const editButtonWrapperFunction = () => {
 		toggleEditMode();
-		props.setAsCurrentTodo();
 	};
 
 	if (editTodoMode) {
@@ -37,35 +67,34 @@ const TodoCardFormAndDisplay = (props) => {
 					onSubmit={() => saveButtonWrapperFunction()}
 				>
 					<input
-						onChange={(e) => props.handleUpdateTodo(e)}
+						onChange={(e) => setTodoName(e.target.value)}
 						name="name"
 						type="text"
 						placeholder="Enter your todo name..."
-						value={props.currentTodo.todo.name}
+						value={todoName}
 						required
 					></input>
 
 					<input
-						onChange={(e) => props.handleUpdateTodo(e)}
+						onChange={(e) => setTodoDescription(e.target.value)}
 						name="description"
 						type="text"
 						placeholder="Description..."
-						value={props.currentTodo.todo.description}
-						required
+						value={todoDescription}
 					></input>
 
 					<input
-						onChange={(e) => props.handleUpdateTodo(e)}
+						onChange={(e) => setTodoDueDate(e.target.value)}
 						name="dueDate"
 						type="date"
-						value={props.currentTodo.todo.dueDate}
+						value={todoDueDate}
 						required
 					></input>
 
 					<select
 						name="priority"
-						onChange={(e) => props.handleUpdateTodo(e)}
-						value={props.currentTodo.todo.priority}
+						onChange={(e) => setTodoPriority(e.target.value)}
+						value={todoPriority}
 						required
 					>
 						<option>Low</option>
@@ -86,7 +115,7 @@ const TodoCardFormAndDisplay = (props) => {
 					<p>{props.todo.name}</p>
 					<p>{props.todo.dueDate}</p>
 					<p>{props.todo.priority}</p>
-					<button onClick={props.deleteTodo}>Delete</button>
+					<button onClick={deleteTodo}>Delete</button>
 				</div>
 
 				<div

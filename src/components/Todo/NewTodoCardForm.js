@@ -1,9 +1,17 @@
 import React from "react";
 
 const NewTodoCardForm = (props) => {
+	const onSubmitWrapperFunction = (e) => {
+		props.addTodo(e);
+		props.hideForm(e);
+	};
+
 	return (
 		<div className="todoCardContainer" style={{ display: props.display }}>
-			<form className="todoCardFormDisplay" onSubmit={(e) => props.addTodo(e)}>
+			<form
+				className="todoCardFormDisplay"
+				onSubmit={(e) => onSubmitWrapperFunction(e)}
+			>
 				<input
 					onChange={(e) => props.handleNewTodo(e)}
 					name="name"

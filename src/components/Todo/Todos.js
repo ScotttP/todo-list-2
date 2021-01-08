@@ -24,16 +24,6 @@ const Todos = () => {
 		},
 	});
 
-	const [currentTodo, setCurrentTodo] = useState({
-		todo: {
-			name: "",
-			description: "",
-			dueDate: "",
-			priority: "",
-			completed: false,
-		},
-	});
-
 	const handleNewTodo = (e) => {
 		setNewTodo((prevState) =>
 			// console.log(prevState)
@@ -41,30 +31,6 @@ const Todos = () => {
 				todo: { ...prevState.todo, [e.target.name]: e.target.value },
 			})
 		);
-	};
-
-	const handleUpdateTodo = (e) => {
-		setCurrentTodo((prevState) => ({
-			todo: { ...prevState.todo, [e.target.name]: e.target.value },
-		}));
-	};
-
-	const setAsCurrentTodo = (
-		name,
-		description,
-		dueDate,
-		priority,
-		completed
-	) => {
-		// setAsCurrentTodo({
-		// 	todo: {
-		// 		name: name,
-		// 		description: "test",
-		// 		dueDate: "12/23/2019",
-		// 		priority: "Low",
-		// 		completed: false,
-		// 	},
-		// });
 	};
 
 	const addTodo = async (e) => {
@@ -79,33 +45,6 @@ const Todos = () => {
 		});
 
 		setNewTodo({
-			todo: {
-				name: "",
-				description: "",
-				dueDate: "",
-				priority: "",
-				completed: false,
-			},
-		});
-	};
-
-	const deleteTodo = (todo) => {
-		todosRef
-			.doc(`${todo.id}`)
-			.delete()
-			.catch((error) => console.log(error));
-	};
-
-	const updateTodo = (todo) => {
-		console.log(currentTodo.todo.name);
-		todosRef.doc(todo.id).update({
-			name: currentTodo.todo.name,
-			description: currentTodo.todo.description,
-			dueDate: currentTodo.todo.dueDate,
-			priority: currentTodo.todo.priority,
-			completed: currentTodo.todo.completed,
-		});
-		setCurrentTodo({
 			todo: {
 				name: "",
 				description: "",
@@ -136,17 +75,7 @@ const Todos = () => {
 				/>
 				{todos &&
 					todos.map((todo) => (
-						<TodoCardFormAndDisplay
-							key={todos.id}
-							todo={todo}
-							currentTodo={currentTodo}
-							newTodo={newTodo}
-							deleteTodo={() => deleteTodo(todo)}
-							handleUpdateTodo={(e) => handleUpdateTodo(e)}
-							addTodo={(e) => addTodo(e)}
-							updateTodo={(e) => updateTodo(e)}
-							setAsCurrentTodo={() => setAsCurrentTodo()}
-						/>
+						<TodoCardFormAndDisplay key={todos.id} todo={todo} />
 					))}
 			</div>
 		</main>
