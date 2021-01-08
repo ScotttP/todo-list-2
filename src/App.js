@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navigation/Navbar";
-import Projects from "./components/Project/Projects";
+
 import Todos from "./components/Todo/Todos";
 import Login from "./components/User Auth/Login";
 import SignUp from "./components/User Auth/SignUp";
@@ -20,6 +20,8 @@ const App = () => {
 	const [signUpPassword, setSignUpPassword] = useState("");
 	const [currentUser, setCurrentUser] = useState("");
 	const [errors, setErrors] = useState("");
+
+	const firebaseAuth = firebase.auth();
 
 	const handleChange = (e) => {
 		if (e.target.type === "email" && e.target.id === "loginEmailInput")
@@ -34,46 +36,44 @@ const App = () => {
 
 	const loginWithEmail = (e) => {
 		e.preventDefault();
-		firebase
-			.auth()
+		firebaseAuth
 			.signInWithEmailAndPassword(loginEmail, loginPassword)
 			.catch((error) => {
 				setErrors(error);
 			});
-		setCurrentUser(firebase.auth().currentUser);
+		setCurrentUser(firebaseAuth.currentUser);
 		setErrors("");
 	};
 	const signUpWithEmail = (e) => {
 		e.preventDefault();
-		firebase
-			.auth()
+		firebaseAuth
 			.createUserWithEmailAndPassword(signUpEmail, signUpPassword)
 			.catch((error) => {
 				setErrors(error);
 			});
-		setCurrentUser(firebase.auth().currentUser);
+		setCurrentUser(firebaseAuth.currentUser);
 		setErrors("");
 	};
 	const loginWithGoogle = (e) => {
 		let provider = new firebase.auth.GoogleAuthProvider();
-		firebase.auth().signInWithPopup(provider);
-		setCurrentUser(firebase.auth().currentUser);
+		firebaseAuth.signInWithPopup(provider);
+		setCurrentUser(firebaseAuth.currentUser);
 	};
 
 	const signOut = () => {
-		firebase.auth().signOut();
+		firebaseAuth.signOut();
 	};
 
 	const authStateObserver = (user) => {
 		if (user) {
-			setCurrentUser(firebase.auth().currentUser);
+			setCurrentUser(firebaseAuth.currentUser);
 		} else {
 			setCurrentUser("");
 		}
 	};
 
 	useEffect(() => {
-		firebase.auth().onAuthStateChanged(authStateObserver);
+		firebaseAuth.onAuthStateChanged(authStateObserver);
 	});
 
 	return (
@@ -139,7 +139,6 @@ const App = () => {
 					render={() =>
 						currentUser ? (
 							<div id="projectsAndTodosDisplay">
-								{/* <Projects currentUser={currentUser}></Projects> */}
 								<Todos></Todos>
 							</div>
 						) : (

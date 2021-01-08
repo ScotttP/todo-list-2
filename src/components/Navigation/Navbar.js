@@ -29,14 +29,14 @@ const Navbar = (props) => {
 			return (
 				<div id="navbarLeft">
 					<p>Welcome, {props.currentUser.displayName}</p>
-					<a onClick={props.signOut}>Sign Out</a>
+					<button onClick={props.signOut}>Sign Out</button>
 				</div>
 			);
 		if (props.currentUser.displayName === null)
 			return (
 				<div id="navbarLeft">
 					<p>Welcome, {props.currentUser.email}</p>
-					<a onClick={props.signOut}>Sign Out</a>
+					<button onClick={props.signOut}>Sign Out</button>
 				</div>
 			);
 		else

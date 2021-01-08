@@ -4,7 +4,6 @@ import "firebase/auth";
 import "firebase/firestore";
 const firestore = firebase.firestore();
 const todosRef = firestore.collection("todos");
-const todosQuery = todosRef.orderBy("name");
 
 const TodoCardFormAndDisplay = (props) => {
 	const [extendedViewDisplay, setExtendedViewDisplay] = useState("none");
@@ -16,26 +15,38 @@ const TodoCardFormAndDisplay = (props) => {
 	);
 	const [todoDueDate, setTodoDueDate] = useState(props.todo.dueDate);
 	const [todoPriority, setTodoPriority] = useState(props.todo.priority);
+	const [todoPriorityValue, setTodoPriorityValue] = useState(
+		props.todo.priorityValue
+	);
 	const [todoCompleted, setTodoCompleted] = useState(props.todo.completed);
 
-	const updateTodo = async () => {
-		await todosRef
-			.doc(props.todo.id)
-			.update({
-				name: todoName,
-				description: todoDescription,
-				dueDate: todoDueDate,
-				priority: todoPriority,
-				completed: todoCompleted,
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-
 	useEffect(() => {
+		const updateTodo = async () => {
+			await todosRef
+				.doc(props.todo.id)
+				.update({
+					name: todoName,
+					description: todoDescription,
+					dueDate: todoDueDate,
+					priority: todoPriority,
+					priorityValue: todoPriorityValue,
+					completed: todoCompleted,
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		};
+
 		updateTodo();
-	}, [todoName, todoDescription, todoDueDate, todoPriority, todoCompleted]);
+	}, [
+		todoName,
+		todoDescription,
+		todoDueDate,
+		todoPriority,
+		todoPriorityValue,
+		todoCompleted,
+		props.todo.id,
+	]);
 
 	const deleteTodo = () => {
 		todosRef
@@ -61,6 +72,19 @@ const TodoCardFormAndDisplay = (props) => {
 	const saveButtonWrapperFunction = () => {
 		toggleEditMode();
 		toggleExtendedViewDisplay();
+	};
+
+	const todoPriorityWrapperFunction = (e) => {
+		setTodoPriority(e.target.value);
+		if (e.target.value === "Low") {
+			setTodoPriorityValue(1);
+		}
+		if (e.target.value === "Medium") {
+			setTodoPriorityValue(2);
+		}
+		if (e.target.value === "High") {
+			setTodoPriorityValue(3);
+		}
 	};
 
 	if (editTodoMode) {
@@ -102,7 +126,7 @@ const TodoCardFormAndDisplay = (props) => {
 
 					<select
 						name="priority"
-						onChange={(e) => setTodoPriority(e.target.value)}
+						onChange={(e) => todoPriorityWrapperFunction(e)}
 						value={todoPriority}
 						required
 					>

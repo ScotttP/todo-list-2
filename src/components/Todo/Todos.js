@@ -16,44 +16,6 @@ const Todos = () => {
 
 	const [todos] = useCollectionData(todosQuery, { idField: "id" });
 
-	const [newTodo, setNewTodo] = useState({
-		todo: {
-			name: "",
-			description: "",
-			dueDate: "",
-			priority: "Low",
-			completed: false,
-		},
-	});
-
-	const handleNewTodo = (e) => {
-		setNewTodo((prevState) => ({
-			todo: { ...prevState.todo, [e.target.name]: e.target.value },
-		}));
-	};
-
-	const addTodo = async (e) => {
-		e.preventDefault();
-
-		await todosRef.add({
-			name: newTodo.todo.name,
-			description: newTodo.todo.description,
-			dueDate: newTodo.todo.dueDate,
-			priority: newTodo.todo.priority,
-			completed: newTodo.todo.completed,
-		});
-
-		setNewTodo({
-			todo: {
-				name: "",
-				description: "",
-				dueDate: "",
-				priority: "Low",
-				completed: false,
-			},
-		});
-	};
-
 	const handleFilter = (e) => {
 		const optionSelected = e.target.value;
 		if (optionSelected === "Due Soon") {
@@ -65,11 +27,11 @@ const Todos = () => {
 			setFilterOrderBy("desc");
 		}
 		if (optionSelected === "Lowest Priority") {
-			setFilterData("priority");
+			setFilterData("priorityValue");
 			setFilterOrderBy("asc");
 		}
 		if (optionSelected === "Highest Priority") {
-			setFilterData("priority");
+			setFilterData("priorityValue");
 			setFilterOrderBy("desc");
 		}
 	};
@@ -97,13 +59,10 @@ const Todos = () => {
 						e.preventDefault();
 						setformViewDisplay("none");
 					}}
-					handleNewTodo={(e) => handleNewTodo(e)}
-					addTodo={(e) => addTodo(e)}
-					newTodo={newTodo}
 				/>
 				{todos &&
 					todos.map((todo) => (
-						<TodoCardFormAndDisplay key={todos.id} todo={todo} />
+						<TodoCardFormAndDisplay key={todo.id} todo={todo} />
 					))}
 			</div>
 		</main>
