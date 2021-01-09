@@ -19,14 +19,14 @@ const SignUpAndLoginContainer = styled.form`
 	background-color: #272626;
 	display: flex;
 	flex-direction: column;
-
+	border-radius: 5px;
 	align-items: center;
 	width: 25vw;
 	height: 55vh;
 	min-width: 290px;
 	min-height: 495px;
 	max-height: 550px;
-
+	box-shadow: 0px 1px 20px 1px rgb(40, 40, 40);
 	@media only screen and (max-width: 1500px) {
 		height: 50vh;
 		max-height: 500px;
@@ -72,6 +72,8 @@ const PasswordTextDiv = styled.div`
 const LoginButton = styled.button`
 	&:hover {
 		cursor: pointer;
+		background-color: #272626;
+		color: #1da930;
 	}
 	width: 100%;
 	height: 2rem;
@@ -79,11 +81,16 @@ const LoginButton = styled.button`
 	border-radius: 5px;
 	background-color: #1da930;
 	color: #fff;
+
+	border: 1px #1da930 solid;
+	transition: 0.3s;
 `;
 
 const GoogleButton = styled.button`
 	&:hover {
 		cursor: pointer;
+		background-color: #272626;
+		color: #fff;
 	}
 	display: flex;
 	justify-content: center;
@@ -93,6 +100,9 @@ const GoogleButton = styled.button`
 	border: none;
 	border-radius: 5px;
 	color: #272626;
+
+	border: 1px #fff solid;
+	transition: 0.3s;
 `;
 
 const GoogleLogo = styled.img`
