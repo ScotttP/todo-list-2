@@ -118,6 +118,7 @@ const DontHaveAnAccount = styled.p`
 const Login = (props) => {
 	return (
 		<FormDiv>
+			{/* <span id="line"></span> */}
 			<SignUpAndLoginContainer>
 				<FormContent>
 					<LoginHeader>Login</LoginHeader>

@@ -17,37 +17,17 @@ body {
 #root {
 	height: 100vh;
 }
-
-/* NAVBAR */
-#navbarContainer {
-	background-color: #1f1f1f;
-
-	height: 4vh;
-	width: 100%;
+#line {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	background-color: #1db954;
+	height: 500px;
+	width: 500px;
 }
-
-#navbarContainer {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-#navbarLeft {
-	margin-right: 15px;
-}
-#navbarLeft > a,
-#navbarRight > a {
-	color: #1db954;
-	text-decoration: "none";
-	margin: 5px;
-}
-
-a:hover {
-	cursor: pointer;
-}
-/* NAVBAR */
 
 /* Main Display */
-#projectsAndTodosDisplay {
+#todosDisplay {
 	display: flex;
 	justify-content: center;
 
@@ -58,49 +38,8 @@ a:hover {
 
 /* Main Display */
 
-/* Projects Container */
-
-#projectsContainer {
-	width: 30%;
-	margin-left: 5%;
-	background-color: #363636;
-}
-#projectList {
-	margin-top: 10px;
-}
-
-/* Projects Container */
-
-/* Project Card */
-#projectCardContainer {
-	display: flex;
-	align-items: center;
-}
-#deleteProject {
-	margin-left: 10px;
-}
-#deleteProject:hover {
-	color: red;
-	cursor: pointer;
-}
-
-/* Project Card */
-
 /* Todos Container */
 
-#todosContainer {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 70%;
-	background-color: #272626;
-	margin-right: 5%;
-}
-
-#todosHeader {
-	text-align: center;
-	margin-bottom: 10px;
-}
 .todoCardContainer {
 	display: flex;
 	flex-direction: column;

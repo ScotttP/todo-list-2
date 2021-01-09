@@ -139,11 +139,11 @@ const App = () => {
 					path="/Todos"
 					render={() =>
 						currentUser ? (
-							<div id="projectsAndTodosDisplay">
+							<div id="todosDisplay">
 								<Todos currentUser={currentUser}></Todos>
 							</div>
 						) : (
-							<div>Need to login or sign up to see this page.</div>
+							<Redirect to="/Login"></Redirect>
 						)
 					}
 				></Route>
