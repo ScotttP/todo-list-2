@@ -44,6 +44,7 @@ const NavBarLeft = styled.div`
 		width: 80px;
 		padding: 5px;
 		transition: 0.2s;
+		border-bottom: 3px solid #1f1f1f;
 	}
 	& > a:hover {
 		cursor: pointer;

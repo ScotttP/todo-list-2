@@ -44,6 +44,14 @@ const AddTodoButton = styled.button`
 	margin: 10px;
 `;
 
+const TodoListTableDiv = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+`;
+
 const FilterDataDiv = styled.div`
 	border-top: 1px #404040 solid;
 	padding-top: 10px;
@@ -79,8 +87,6 @@ const Todos = (props) => {
 
 	const [todos] = useCollectionData(todosQuery, { idField: "id" });
 
-	console.log(props.currentUser);
-
 	const handleFilter = (e) => {
 		const optionSelected = e.target.value;
 		if (optionSelected === "Due Soon") {
@@ -104,13 +110,13 @@ const Todos = (props) => {
 	return (
 		<TodosContainer>
 			<TodosHeaderContainer>
-				<TodoHeader>To-Do Items</TodoHeader>
+				<TodoHeader>ToDo Items</TodoHeader>
 				<AddTodoButton onClick={() => setformViewDisplay("flex")}>
 					+ New Todo
 				</AddTodoButton>
 			</TodosHeaderContainer>
 
-			<div id="todoListTable">
+			<TodoListTableDiv>
 				<NewTodoCardForm
 					display={formViewDisplay}
 					hideForm={(e) => {
@@ -132,7 +138,7 @@ const Todos = (props) => {
 					todos.map((todo) => (
 						<TodoCardFormAndDisplay key={todo.id} todo={todo} />
 					))}
-			</div>
+			</TodoListTableDiv>
 		</TodosContainer>
 	);
 };

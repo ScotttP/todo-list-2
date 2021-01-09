@@ -2,8 +2,61 @@ import { React, useState } from "react";
 import firebase from "../../firebaseConfig";
 import "firebase/auth";
 import "firebase/firestore";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+
 const firestore = firebase.firestore();
 const todosRef = firestore.collection("todos");
+
+const TodoCardContainer = styled.div`
+	display: ${(props) => (props.display === "flex" ? "flex" : "none")};
+	flex-direction: column;
+
+	width: 80%;
+	height: fit-content;
+	padding: 2% 5% 2% 5%;
+	margin: 2%;
+	background-color: #383636;
+`;
+
+const TodoCardFormDisplay = styled.form`
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+
+	& > select {
+		border-radius: 5px;
+		background-color: #fff;
+		color: #272626;
+		border: 1px #272626 solid;
+	}
+	& > select:hover {
+		cursor: pointer;
+	}
+`;
+
+const FormInputs = styled.input`
+	width: 20%;
+	height: 1.5rem;
+	padding: 5px;
+
+	border-radius: 5px;
+	background-color: #fff;
+	color: #272626;
+	border: 1px #272626 solid;
+`;
+
+const SubmitAndCancelNewTodoButton = styled.button`
+	background-color: transparent;
+	border: none;
+	font-size: 20px;
+
+	&:hover {
+		cursor: pointer;
+	}
+`;
 
 const NewTodoCardForm = (props) => {
 	const [newTodoName, setNewTodoName] = useState("");
@@ -50,35 +103,32 @@ const NewTodoCardForm = (props) => {
 	};
 
 	return (
-		<div className="todoCardContainer" style={{ display: props.display }}>
-			<form
-				className="todoCardFormDisplay"
-				onSubmit={(e) => onSubmitWrapperFunction(e)}
-			>
-				<input
+		<TodoCardContainer display={props.display}>
+			<TodoCardFormDisplay onSubmit={(e) => onSubmitWrapperFunction(e)}>
+				<FormInputs
 					onChange={(e) => setNewTodoName(e.target.value)}
 					name="name"
 					type="text"
 					placeholder="Enter your todo name..."
 					value={newTodoName}
 					required
-				></input>
+				></FormInputs>
 
-				<input
+				<FormInputs
 					onChange={(e) => setNewTodoDescription(e.target.value)}
 					name="description"
 					type="text"
 					placeholder="Description..."
 					value={newTodoDescription}
-				></input>
+				></FormInputs>
 
-				<input
+				<FormInputs
 					onChange={(e) => setNewTodoDueDate(e.target.value)}
 					name="dueDate"
 					type="date"
 					value={newTodoDueDate}
 					required
-				></input>
+				></FormInputs>
 
 				<select
 					name="priority"
@@ -90,10 +140,20 @@ const NewTodoCardForm = (props) => {
 					<option>Medium</option>
 					<option>High</option>
 				</select>
-				<button type="submit">Save</button>
-				<button onClick={(e) => props.hideForm(e)}>Cancel</button>
-			</form>
-		</div>
+				<SubmitAndCancelNewTodoButton type="submit">
+					<FontAwesomeIcon
+						className="fontAwesomeSaveIcon"
+						icon={faCheck}
+					></FontAwesomeIcon>
+				</SubmitAndCancelNewTodoButton>
+				<SubmitAndCancelNewTodoButton onClick={(e) => props.hideForm(e)}>
+					<FontAwesomeIcon
+						className="fontAwesomeCancelIcon"
+						icon={faTimes}
+					></FontAwesomeIcon>
+				</SubmitAndCancelNewTodoButton>
+			</TodoCardFormDisplay>
+		</TodoCardContainer>
 	);
 };
 
