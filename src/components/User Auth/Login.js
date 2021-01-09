@@ -2,6 +2,36 @@ import { React } from "react";
 import { Link } from "react-router-dom";
 import Error from "../Error";
 import styled from "styled-components";
+import googleLogo from "../../assets/icons8-google.svg";
+
+const FormDiv = styled.div`
+	height: 90vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	@media only screen and (max-width: 350px) {
+		margin-top: 14px;
+	}
+`;
+
+const SignUpAndLoginContainer = styled.form`
+	background-color: #272626;
+	display: flex;
+	flex-direction: column;
+
+	align-items: center;
+	width: 25vw;
+	height: 55vh;
+	min-width: 290px;
+	min-height: 495px;
+	max-height: 550px;
+
+	@media only screen and (max-width: 1500px) {
+		height: 50vh;
+		max-height: 500px;
+	}
+`;
 
 const FormContent = styled.div`
 	display: flex;
@@ -10,6 +40,8 @@ const FormContent = styled.div`
 	margin-top: 20px;
 	width: 20vw;
 	height: 100%;
+	min-width: 240px;
+	max-height: 550px;
 `;
 
 const LoginHeader = styled.h1`
@@ -18,6 +50,7 @@ const LoginHeader = styled.h1`
 
 const FormLabels = styled.label`
 	width: 20vw;
+	min-width: 231px;
 	margin: 5%;
 	font-size: 13px;
 `;
@@ -37,32 +70,45 @@ const PasswordTextDiv = styled.div`
 `;
 
 const LoginButton = styled.button`
+	&:hover {
+		cursor: pointer;
+	}
 	width: 100%;
 	height: 2rem;
 	border: none;
 	border-radius: 5px;
-	background-color: #1db954;
+	background-color: #1da930;
 	color: #fff;
 `;
 
 const GoogleButton = styled.button`
+	&:hover {
+		cursor: pointer;
+	}
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 100%;
 	height: 2rem;
 	border: none;
 	border-radius: 5px;
+	color: #272626;
 `;
 
-const SignUpButton = styled.button`
-	width: 100%;
-	height: 2rem;
-	border: none;
-	border-radius: 5px;
+const GoogleLogo = styled.img`
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+`;
+
+const DontHaveAnAccount = styled.p`
+	margin: 5% 2% 2% 2%;
 `;
 
 const Login = (props) => {
 	return (
-		<div id="formDiv">
-			<form id="signUpAndLoginContainer">
+		<FormDiv>
+			<SignUpAndLoginContainer>
 				<FormContent>
 					<LoginHeader>Login</LoginHeader>
 					<FormLabels>
@@ -95,22 +141,28 @@ const Login = (props) => {
 					<br></br>
 					<Error errors={props.errors} />
 					<LoginButton onClick={(e) => props.loginWithEmail(e)}>
-						Login
+						<b>Login</b>
 					</LoginButton>
 					<br></br>
 					<p>or sign in with</p>
 					<br></br>
 					<GoogleButton onClick={(e) => props.loginWithGoogle(e)}>
-						Google
+						<GoogleLogo src={googleLogo}></GoogleLogo>
+						<b>Google</b>
 					</GoogleButton>
 					<br></br>
-					<p>Don't have an account?</p>
+					<DontHaveAnAccount>Don't have an account?</DontHaveAnAccount>
 					<Link style={{ textDecoration: "none" }} to="/SignUp">
-						<SignUpButton onClick={props.resetErrors}>Sign Up</SignUpButton>
+						<p
+							onClick={props.resetErrors}
+							style={{ textDecoration: "none", color: "#1DB954" }}
+						>
+							Sign Up
+						</p>
 					</Link>
 				</FormContent>
-			</form>
-		</div>
+			</SignUpAndLoginContainer>
+		</FormDiv>
 	);
 };
 
