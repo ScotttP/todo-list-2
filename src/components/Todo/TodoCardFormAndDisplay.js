@@ -20,9 +20,28 @@ const TodoCardContainer = styled.div`
 	box-shadow: 0px 1px 20px 1px rgb(43, 43, 43);
 	width: 80%;
 	height: fit-content;
-	padding: 2% 5% 2% 5%;
+	padding: 1% 5% 1% 5%;
 	margin: 2%;
 	background-color: #383636;
+
+	@media only screen and (max-width: 1075px) {
+		padding: 2%;
+	}
+	@media only screen and (max-width: 706px) {
+		margin: 2% 0 2% 0;
+		width: 90%;
+	}
+	@media only screen and (max-width: 600px) {
+		font-size: 14px;
+	}
+
+	@media only screen and (max-width: 500px) {
+		width: 95%;
+	}
+	@media only screen and (max-width: 450px) {
+		width: 99%;
+		font-size: 11px;
+	}
 `;
 
 const TodoCardMainDisplay = styled.div`
@@ -31,27 +50,54 @@ const TodoCardMainDisplay = styled.div`
 	align-items: center;
 
 	& > p {
-		width: 20%;
 		text-align: center;
+		transition: 0.2s;
+		text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
+		color: ${(props) => (props.completed ? " #212020" : "#fff")};
+		@media only screen and (max-width: 995px) {
+			text-align: left;
+		}
+		@media only screen and (min-width: 1100px) {
+			width: 20%;
+		}
 	}
 
 	& > div {
 		width: 10%;
+		transition: 0.2s;
+		color: ${(props) => (props.completed ? " #272626" : "#fff")};
+
+		@media only screen and (max-width: 800px) {
+			width: 5%;
+			padding: 0%;
+		}
 	}
 `;
 
 const TodoCardFormDisplay = styled.form`
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	width: 100%;
 	& > select {
 		border-radius: 5px;
 		background-color: #fff;
 		color: #272626;
 		border: 1px #272626 solid;
+		height: 1.5rem;
+		@media only screen and (max-width: 650px) {
+			width: 70%;
+			margin: 2%;
+		}
 	}
 	& > select:hover {
 		cursor: pointer;
+	}
+	@media only screen and (max-width: 650px) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 `;
 
@@ -59,6 +105,12 @@ const TodoCardExpandedViewDisplay = styled.div`
 	display: flex;
 	justify-content: space-between;
 	margin-top: 15px;
+
+	& > p {
+		text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
+		color: ${(props) => (props.completed ? " #212020" : "#fff")};
+		transition: 0.2s;
+	}
 `;
 
 const CheckboxDiv = styled.div`
@@ -90,7 +142,7 @@ const DeleteButton = styled.button`
 	border: none;
 	font-size: 15px;
 	color: #fff;
-	transition: 0.3;
+	transition: 0.2s;
 	&:hover {
 		cursor: pointer;
 		color: #ca1616;
@@ -120,16 +172,26 @@ const FormInputs = styled.input`
 	background-color: #fff;
 	color: #272626;
 	border: 1px #272626 solid;
+	@media only screen and (max-width: 650px) {
+		width: 70%;
+		margin: 2%;
+	}
 `;
 
 const SubmitAndCancelNewTodoButton = styled.button`
 	background-color: transparent;
 	border: none;
 	font-size: 20px;
-
+	margin: 5px 8px 5px 15px;
 	&:hover {
 		cursor: pointer;
 	}
+`;
+
+const PriorityDisplay = styled.p`
+	${"" /* @media only screen and (max-width: 600px) {
+		width: 10%;
+	} */}
 `;
 
 const TodoCardFormAndDisplay = (props) => {
@@ -253,25 +315,27 @@ const TodoCardFormAndDisplay = (props) => {
 						<option>Medium</option>
 						<option>High</option>
 					</select>
-					<SubmitAndCancelNewTodoButton type="submit">
-						<FontAwesomeIcon
-							className="fontAwesomeSaveIcon"
-							icon={faCheck}
-						></FontAwesomeIcon>
-					</SubmitAndCancelNewTodoButton>
-					<SubmitAndCancelNewTodoButton onClick={toggleEditMode}>
-						<FontAwesomeIcon
-							className="fontAwesomeCancelIcon"
-							icon={faTimes}
-						></FontAwesomeIcon>
-					</SubmitAndCancelNewTodoButton>
+					<div>
+						<SubmitAndCancelNewTodoButton type="submit">
+							<FontAwesomeIcon
+								className="fontAwesomeSaveIcon"
+								icon={faCheck}
+							></FontAwesomeIcon>
+						</SubmitAndCancelNewTodoButton>
+						<SubmitAndCancelNewTodoButton onClick={toggleEditMode}>
+							<FontAwesomeIcon
+								className="fontAwesomeCancelIcon"
+								icon={faTimes}
+							></FontAwesomeIcon>
+						</SubmitAndCancelNewTodoButton>
+					</div>
 				</TodoCardFormDisplay>
 			</TodoCardContainer>
 		);
 	} else
 		return (
 			<TodoCardContainer>
-				<TodoCardMainDisplay>
+				<TodoCardMainDisplay completed={todoCompleted}>
 					<CheckboxDiv>
 						<input
 							type="checkbox"
@@ -288,13 +352,16 @@ const TodoCardFormAndDisplay = (props) => {
 					</DropDownIconButton>
 					<p>{props.todo.name}</p>
 					<p>{props.todo.dueDate}</p>
-					<p>{props.todo.priority}</p>
+					<PriorityDisplay>{props.todo.priority}</PriorityDisplay>
 					<EditButton onClick={toggleEditMode}>
 						<FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
 					</EditButton>
 				</TodoCardMainDisplay>
 
-				<TodoCardExpandedViewDisplay style={{ display: extendedViewDisplay }}>
+				<TodoCardExpandedViewDisplay
+					style={{ display: extendedViewDisplay }}
+					completed={todoCompleted}
+				>
 					<p>{props.todo.description}</p>
 					<div>
 						<DeleteButton onClick={deleteTodo}>

@@ -19,11 +19,23 @@ const TodoCardContainer = styled.div`
 	padding: 2% 5% 2% 5%;
 	margin: 2%;
 	background-color: #383636;
+	@media only screen and (max-width: 1075px) {
+		padding: 2%;
+	}
+	@media only screen and (max-width: 706px) {
+		margin: 2% 0 2% 0;
+		width: 90%;
+	}
+
+	@media only screen and (max-width: 450px) {
+		font-size: 11px;
+	}
 `;
 
 const TodoCardFormDisplay = styled.form`
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	width: 100%;
 
 	& > select {
@@ -31,9 +43,20 @@ const TodoCardFormDisplay = styled.form`
 		background-color: #fff;
 		color: #272626;
 		border: 1px #272626 solid;
+		height: 1.5rem;
+		@media only screen and (max-width: 650px) {
+			width: 70%;
+			margin: 2%;
+		}
 	}
 	& > select:hover {
 		cursor: pointer;
+	}
+	@media only screen and (max-width: 650px) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 `;
 
@@ -46,12 +69,17 @@ const FormInputs = styled.input`
 	background-color: #fff;
 	color: #272626;
 	border: 1px #272626 solid;
+	@media only screen and (max-width: 650px) {
+		width: 70%;
+		margin: 2%;
+	}
 `;
 
 const SubmitAndCancelNewTodoButton = styled.button`
 	background-color: transparent;
 	border: none;
 	font-size: 20px;
+	margin: 5px 15px 5px 15px;
 
 	&:hover {
 		cursor: pointer;
@@ -140,18 +168,20 @@ const NewTodoCardForm = (props) => {
 					<option>Medium</option>
 					<option>High</option>
 				</select>
-				<SubmitAndCancelNewTodoButton type="submit">
-					<FontAwesomeIcon
-						className="fontAwesomeSaveIcon"
-						icon={faCheck}
-					></FontAwesomeIcon>
-				</SubmitAndCancelNewTodoButton>
-				<SubmitAndCancelNewTodoButton onClick={(e) => props.hideForm(e)}>
-					<FontAwesomeIcon
-						className="fontAwesomeCancelIcon"
-						icon={faTimes}
-					></FontAwesomeIcon>
-				</SubmitAndCancelNewTodoButton>
+				<div>
+					<SubmitAndCancelNewTodoButton type="submit">
+						<FontAwesomeIcon
+							className="fontAwesomeSaveIcon"
+							icon={faCheck}
+						></FontAwesomeIcon>
+					</SubmitAndCancelNewTodoButton>
+					<SubmitAndCancelNewTodoButton onClick={(e) => props.hideForm(e)}>
+						<FontAwesomeIcon
+							className="fontAwesomeCancelIcon"
+							icon={faTimes}
+						></FontAwesomeIcon>
+					</SubmitAndCancelNewTodoButton>
+				</div>
 			</TodoCardFormDisplay>
 		</TodoCardContainer>
 	);

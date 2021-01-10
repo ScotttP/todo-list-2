@@ -16,6 +16,18 @@ const TodosContainer = styled.main`
 	background-color: #272626;
 	box-shadow: 0px 1px 20px 1px rgb(40, 40, 40);
 	border-radius: 5px;
+	@media only screen and (max-width: 995px) {
+		width: 80%;
+	}
+	@media only screen and (max-width: 795px) {
+		width: 90%;
+	}
+	@media only screen and (max-width: 500px) {
+		width: 95%;
+	}
+	@media only screen and (max-width: 450px) {
+		width: 100%;
+	}
 `;
 
 const TodosHeaderContainer = styled.div`
@@ -25,6 +37,9 @@ const TodosHeaderContainer = styled.div`
 
 const TodoHeader = styled.h2`
 	margin: 20px 10px 5px 10px;
+	@media only screen and (max-width: 450px) {
+		font-size: 16px;
+	}
 `;
 
 const AddTodoButton = styled.button`
@@ -42,6 +57,10 @@ const AddTodoButton = styled.button`
 	border: 1px #1da930 solid;
 	transition: 0.2s;
 	margin: 10px;
+	@media only screen and (max-width: 450px) {
+		width: 80%;
+		height: 1.2rem;
+	}
 `;
 
 const TodoListTableDiv = styled.div`
@@ -63,6 +82,9 @@ const FilterDataDiv = styled.div`
 	& > h4 {
 		margin-right: 10px;
 		color: #fff;
+		@media only screen and (max-width: 450px) {
+			font-size: 15px;
+		}
 	}
 
 	& > select {
@@ -71,10 +93,24 @@ const FilterDataDiv = styled.div`
 		background-color: #272626;
 		color: #fff;
 		border: 1px #fff solid;
+		@media only screen and (max-width: 450px) {
+			height: 1.2rem;
+		}
 	}
 
 	& > select:hover {
 		cursor: pointer;
+	}
+	@media only screen and (max-width: 706px) {
+		width: 90%;
+	}
+
+	@media only screen and (max-width: 500px) {
+		width: 95%;
+	}
+	@media only screen and (max-width: 450px) {
+		margin-bottom: 10px;
+		width: 99%;
 	}
 `;
 

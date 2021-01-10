@@ -23,10 +23,17 @@ const NavBarRight = styled.div`
 	}
 	font-size: 1.7rem;
 	margin-left: 5px;
+	@media only screen and (max-width: 450px) {
+		width: 99%;
+		font-size: 20px;
+	}
+	@media only screen and (max-width: 375px) {
+		font-size: 16px;
+	}
 `;
 
 const UserGreeting = styled.p`
-	width: 175px;
+	width: fit-content;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -63,6 +70,13 @@ const NavBarLeft = styled.div`
 	align-items: center;
 	height: 100%;
 	margin-right: 15px;
+	@media only screen and (max-width: 450px) {
+		font-size: 14px;
+		margin-right: 0;
+	}
+	@media only screen and (max-width: 375px) {
+		font-size: 12px;
+	}
 `;
 
 const Navbar = (props) => {
