@@ -220,6 +220,7 @@ const TodoCardFormAndDisplay = (props) => {
 					priority: todoPriority,
 					priorityValue: todoPriorityValue,
 					completed: todoCompleted,
+					userId: props.currentUser.uid,
 				})
 				.catch((error) => {
 					console.log(error);
@@ -235,6 +236,7 @@ const TodoCardFormAndDisplay = (props) => {
 		todoPriorityValue,
 		todoCompleted,
 		props.todo.id,
+		props.currentUser.uid,
 	]);
 
 	const deleteTodo = () => {

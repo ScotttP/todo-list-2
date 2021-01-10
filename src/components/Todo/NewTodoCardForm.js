@@ -97,14 +97,17 @@ const NewTodoCardForm = (props) => {
 	const addTodo = async (e) => {
 		e.preventDefault();
 
-		await todosRef.add({
-			name: newTodoName,
-			description: newTodoDescription,
-			dueDate: newTodoDueDate,
-			priority: newTodoPriority,
-			priorityValue: newTodoPriorityValue,
-			completed: newTodoCompleted,
-		});
+		await todosRef
+			.add({
+				name: newTodoName,
+				description: newTodoDescription,
+				dueDate: newTodoDueDate,
+				priority: newTodoPriority,
+				priorityValue: newTodoPriorityValue,
+				completed: newTodoCompleted,
+				userId: props.currentUser.uid,
+			})
+			.catch((error) => console.log(error));
 		setNewTodoName("");
 		setNewTodoDescription("");
 		setNewTodoDueDate("");
@@ -129,6 +132,8 @@ const NewTodoCardForm = (props) => {
 			setNewTodoPriorityValue(3);
 		}
 	};
+
+	console.log(props.currentUser.uid);
 
 	return (
 		<TodoCardContainer display={props.display}>

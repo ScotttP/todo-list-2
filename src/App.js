@@ -13,6 +13,9 @@ import Login from "./components/User Auth/Login";
 import SignUp from "./components/User Auth/SignUp";
 import firebase from "./firebaseConfig";
 
+const firestore = firebase.firestore();
+const usersRef = firestore.collection("users");
+
 const App = () => {
 	const [loginEmail, setLoginEmail] = useState("");
 	const [loginPassword, setLoginPassword] = useState("");
@@ -52,9 +55,20 @@ const App = () => {
 			.catch((error) => {
 				setErrors(error);
 			});
+
 		setCurrentUser(firebaseAuth.currentUser);
 		setErrors("");
+		// addToFirestore(e);
 	};
+	const addToFirestore = async (e) => {
+		await usersRef
+			.add({
+				email: currentUser.email,
+				id: currentUser.uid,
+			})
+			.catch((error) => console.log(error));
+	};
+
 	const loginWithGoogle = (e) => {
 		let provider = new firebase.auth.GoogleAuthProvider();
 		firebaseAuth.signInWithPopup(provider);

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import TodoCardFormAndDisplay from "./TodoCardFormAndDisplay";
 import NewTodoCardForm from "./NewTodoCardForm";
 import firebase from "../../firebaseConfig";
@@ -117,12 +117,25 @@ const FilterDataDiv = styled.div`
 const Todos = (props) => {
 	const [filterData, setFilterData] = useState("dueDate");
 	const [filterOrderBy, setFilterOrderBy] = useState("asc");
+	// const [todos, setTodos] = useState([]);
 	const todosRef = firestore.collection("todos");
 	const todosQuery = todosRef.orderBy(filterData, filterOrderBy);
 	const [formViewDisplay, setformViewDisplay] = useState("none");
 
 	const [todos] = useCollectionData(todosQuery, { idField: "id" });
 
+	// console.log(todosRef);
+	// console.log(todosQuery);
+
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		const data = await firestore.collection("todos").get();
+	// 		setTodos(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+	// 	}
+	// 	fetchData();
+	// }, []);
+
+	console.log(todos);
 	const handleFilter = (e) => {
 		const optionSelected = e.target.value;
 		if (optionSelected === "Due Soon") {
@@ -159,6 +172,7 @@ const Todos = (props) => {
 						e.preventDefault();
 						setformViewDisplay("none");
 					}}
+					currentUser={props.currentUser}
 				/>
 				<FilterDataDiv>
 					<h4>Filter By: </h4>
@@ -172,7 +186,11 @@ const Todos = (props) => {
 				</FilterDataDiv>
 				{todos &&
 					todos.map((todo) => (
-						<TodoCardFormAndDisplay key={todo.id} todo={todo} />
+						<TodoCardFormAndDisplay
+							key={todo.id}
+							todo={todo}
+							currentUser={props.currentUser}
+						/>
 					))}
 			</TodoListTableDiv>
 		</TodosContainer>
