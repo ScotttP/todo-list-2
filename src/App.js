@@ -44,7 +44,6 @@ const App = () => {
 			.catch((error) => {
 				setErrors(error);
 			});
-		setCurrentUser(firebaseAuth.currentUser);
 
 		setErrors("");
 	};
@@ -56,15 +55,13 @@ const App = () => {
 				setErrors(error);
 			});
 
-		setCurrentUser(firebaseAuth.currentUser);
 		setErrors("");
-		// addToFirestore(e);
 	};
-	const addToFirestore = async (e) => {
+	const addToFirestore = async () => {
 		await usersRef
 			.add({
-				email: currentUser.email,
-				id: currentUser.uid,
+				email: firebaseAuth.currentUser.email,
+				id: firebaseAuth.currentUser.uid,
 			})
 			.catch((error) => console.log(error));
 	};
@@ -89,6 +86,7 @@ const App = () => {
 
 	useEffect(() => {
 		firebaseAuth.onAuthStateChanged(authStateObserver);
+		// addToFirestore();
 	});
 
 	return (
