@@ -133,7 +133,7 @@ const NewTodoCardForm = (props) => {
 		}
 	};
 
-	console.log(props.currentUser.uid);
+	// console.log(props.currentUser.uid);
 
 	return (
 		<TodoCardContainer display={props.display}>

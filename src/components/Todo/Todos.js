@@ -120,11 +120,15 @@ const Todos = (props) => {
 	const [filterOrderBy, setFilterOrderBy] = useState("asc");
 
 	const todosRef = firestore.collection("todos");
-	const todosQuery = todosRef.orderBy(filterData, filterOrderBy);
+
+	// const todosQuery = todosRef.orderBy(filterData, filterOrderBy);
+	const todosQuery = todosRef.where("userId", "==", props.currentUser.uid);
 
 	const [todos] = useCollectionData(todosQuery, { idField: "id" });
 
-	console.log(todos);
+	const filterFunction = () => {
+		console.log("fitler the results from useCollectiondataHook");
+	};
 
 	const handleFilter = (e) => {
 		const optionSelected = e.target.value;
