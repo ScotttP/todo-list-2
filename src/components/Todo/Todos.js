@@ -116,39 +116,33 @@ const FilterDataDiv = styled.div`
 
 const Todos = (props) => {
 	const [formViewDisplay, setformViewDisplay] = useState("none");
-	const [filterData, setFilterData] = useState("dueDate");
-	const [filterOrderBy, setFilterOrderBy] = useState("asc");
 
 	const todosRef = firestore.collection("todos");
-
-	// const todosQuery = todosRef.orderBy(filterData, filterOrderBy);
 	const todosQuery = todosRef.where("userId", "==", props.currentUser.uid);
 
 	const [todos] = useCollectionData(todosQuery, { idField: "id" });
-
-	const filterFunction = () => {
-		console.log("fitler the results from useCollectiondataHook");
-	};
+	const [filteredArray, setFilteredArray] = useState([]);
 
 	const handleFilter = (e) => {
 		const optionSelected = e.target.value;
-		if (optionSelected === "Due Soon") {
-			setFilterData("dueDate");
-			setFilterOrderBy("asc");
-		}
-		if (optionSelected === "Due Later") {
-			setFilterData("dueDate");
-			setFilterOrderBy("desc");
-		}
-		if (optionSelected === "Lowest Priority") {
-			setFilterData("priorityValue");
-			setFilterOrderBy("asc");
-		}
-		if (optionSelected === "Highest Priority") {
-			setFilterData("priorityValue");
-			setFilterOrderBy("desc");
+		if (optionSelected === "None") {
+			setFilteredArray(todos);
+		} else if (optionSelected === "Priority: High") {
+			setFilteredArray(todos.filter((todo) => todo.priority === "High"));
+		} else if (optionSelected === "Priority: Medium") {
+			setFilteredArray(todos.filter((todo) => todo.priority === "Medium"));
+		} else if (optionSelected === "Priority: Low") {
+			setFilteredArray(todos.filter((todo) => todo.priority === "Low"));
+		} else if (optionSelected === "Completed") {
+			setFilteredArray(todos.filter((todo) => todo.completed === true));
+		} else if (optionSelected === "Not Completed") {
+			setFilteredArray(todos.filter((todo) => todo.completed === false));
 		}
 	};
+
+	useEffect(() => {
+		setFilteredArray(todos);
+	}, [todos]);
 
 	return (
 		<TodosContainer>
@@ -172,14 +166,16 @@ const Todos = (props) => {
 					<h4>Filter By: </h4>
 
 					<select onChange={(e) => handleFilter(e)}>
-						<option>Due Soon</option>
-						<option>Due Later</option>
-						<option>Lowest Priority</option>
-						<option>Highest Priority</option>
+						<option>None</option>
+						<option>Completed</option>
+						<option>Not Completed</option>
+						<option>Priority: High</option>
+						<option>Priority: Medium</option>
+						<option>Priority: Low</option>
 					</select>
 				</FilterDataDiv>
-				{todos &&
-					todos.map((todo) => (
+				{filteredArray &&
+					filteredArray.map((todo) => (
 						<TodoCardFormAndDisplay
 							key={todo.id}
 							todo={todo}

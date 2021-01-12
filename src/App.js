@@ -57,14 +57,6 @@ const App = () => {
 
 		setErrors("");
 	};
-	const addToFirestore = async () => {
-		await usersRef
-			.add({
-				email: firebaseAuth.currentUser.email,
-				id: firebaseAuth.currentUser.uid,
-			})
-			.catch((error) => console.log(error));
-	};
 
 	const loginWithGoogle = (e) => {
 		let provider = new firebase.auth.GoogleAuthProvider();
@@ -86,7 +78,6 @@ const App = () => {
 
 	useEffect(() => {
 		firebaseAuth.onAuthStateChanged(authStateObserver);
-		// addToFirestore();
 	});
 
 	return (
