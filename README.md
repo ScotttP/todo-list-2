@@ -1,5 +1,3 @@
-# Getting Started with Create React App
-
 # ToDo App w/Firebase.
 
 This is a todo list app utilizing Firebase authentication and database services.
@@ -24,8 +22,8 @@ Technologies:
 
 ## Todos Route
 
-![Alt text](https://github.com/ScotttP/weather-app-3/blob/master/todo-list-2-todos.png?raw=true)
+![Alt text](https://github.com/ScotttP/todo-list-2/blob/master/todo-list-2-todos.png?raw=true)
 
 ## Login Route
 
-![Alt text](https://github.com/ScotttP/weather-app-3/blob/master/todo-list-2-login.png?raw=true)
+![Alt text](https://github.com/ScotttP/todo-list-2/blob/master/todo-list-2-login.png?raw=true)
