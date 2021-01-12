@@ -13,9 +13,6 @@ import Login from "./components/User Auth/Login";
 import SignUp from "./components/User Auth/SignUp";
 import firebase from "./firebaseConfig";
 
-const firestore = firebase.firestore();
-const usersRef = firestore.collection("users");
-
 const App = () => {
 	const [loginEmail, setLoginEmail] = useState("");
 	const [loginPassword, setLoginPassword] = useState("");
@@ -27,6 +24,7 @@ const App = () => {
 	const firebaseAuth = firebase.auth();
 
 	const handleChange = (e) => {
+		setErrors("");
 		if (e.target.type === "email" && e.target.id === "loginEmailInput")
 			return setLoginEmail(e.target.value);
 		if (e.target.type === "password" && e.target.id === "loginPasswordInput")

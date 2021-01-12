@@ -24,7 +24,7 @@ const SignUpAndLoginContainer = styled.form`
 	width: 25vw;
 	height: 55vh;
 	min-width: 290px;
-	min-height: 495px;
+	min-height: 525px;
 	max-height: 550px;
 	box-shadow: 0px 1px 20px 1px rgb(40, 40, 40);
 	@media only screen and (max-width: 1500px) {
@@ -148,9 +148,9 @@ const Login = (props) => {
 							onChange={(e) => props.handleChange(e)}
 						></FormInputs>
 					</FormLabels>
-
-					<br></br>
 					<Error errors={props.errors} />
+					<br></br>
+
 					<LoginButton onClick={(e) => props.loginWithEmail(e)}>
 						<b>Login</b>
 					</LoginButton>

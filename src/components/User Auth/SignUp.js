@@ -139,9 +139,9 @@ const SignUp = (props) => {
 							onChange={(e) => props.handleChange(e)}
 						></FormInputs>
 					</FormLabels>
-
-					<br></br>
 					<Error errors={props.errors} />
+					<br></br>
+
 					<SignUpButton onClick={(e) => props.signUpWithEmail(e)}>
 						<b>Sign Up</b>
 					</SignUpButton>
